@@ -195,6 +195,14 @@ table th {
     background-color: #444;
 }
 
+table th:hover{
+    background-color: rgb(201, 62, 62);
+}
+
+table td:hover{
+    background-color: rgb(160, 50, 50);
+}
+
 caption {
     font-size: 1.2em;
     margin-bottom: 10px;
