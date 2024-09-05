@@ -7,8 +7,19 @@ document.getElementById('stats-form').addEventListener('submit', function(event)
     let wins = document.getElementById('wins').value;
     let losses = document.getElementById('losses').value;
 
+    // winrate si los matches con mayor a 0
+    let winrate = matchesPlayed > 0 ? (wins * 100) / matchesPlayed : 0;
+
     // muestra los datos q se ingresaron
-    alert(`Partidas Jugadas: ${matchesPlayed}\nVictorias: ${wins}\nDerrotas: ${losses} \nWinrate ${(wins * 100)/matchesPlayed}%`);
+    alert(`Partidas Jugadas: ${matchesPlayed}\nVictorias: ${wins}\nDerrotas: ${losses} \nWinrate ${winrate}%`);
+
+    document.getElementById('total-matches').textContent = matchesPlayed;
+    document.getElementById('total-wins').textContent = wins;
+    document.getElementById('total-losses').textContent = losses;
+    document.getElementById('winrate').textContent = winrate.toFixed(2) + '%';
+    
+    //resetea el formulario
+    document.getElementById('stats-form').reset();
 });
 
 //switch del color del boton con el mouse

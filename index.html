@@ -36,8 +36,8 @@
         </section>
 
         <section id="stats">
-            <h2>Estadísticas de Partida</h2>
-            <table border="1">
+            <h2>Estadísticas</h2>
+            <table id="tabla-stats" border="1">
                 <caption>Resumen de Partidas</caption>
                 <thead>
                     <tr>
@@ -47,12 +47,12 @@
                         <th>Winrate</th>
                     </tr>
                 </thead>
-                <tbody id="tabla-stats">
+                <tbody>
                     <tr>
-                        <td>10</td>
-                        <td>7</td>
-                        <td>3</td>
-                        <td>70%</td>
+                        <td id="total-matches"></td>
+                        <td id="total-wins"></td>
+                        <td id="total-losses"></td>
+                        <td id="winrate">0%</td>
                     </tr>
                 </tbody>
             </table>
