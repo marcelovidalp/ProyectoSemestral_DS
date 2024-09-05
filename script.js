@@ -1,26 +1,29 @@
 // envio del form
-document.getElementById('stats-form').addEventListener('submit', function(event) {
-    event.preventDefault(); //asi el form no se envia raealmente
+document.getElementById('stats-form').addEventListener('submit', function() {
+    //no udapte pagina
+    event.preventDefault();
 
     // obtiene los valores del form
-    let matchesPlayed = document.getElementById('matchesPlayed').value;
-    let wins = document.getElementById('wins').value;
-    let losses = document.getElementById('losses').value;
+    let matchesPlayed = parseInt(document.getElementById('matchesPlayed').value);
+    let wins = parseInt(document.getElementById('wins').value);
+    let losses = parseInt(document.getElementById('losses').value);
 
-    // winrate si los matches con mayor a 0
-    let winrate = matchesPlayed > 0 ? (wins * 100) / matchesPlayed : 0;
-
-    // muestra los datos q se ingresaron
-    alert(`Partidas Jugadas: ${matchesPlayed}\nVictorias: ${wins}\nDerrotas: ${losses} \nWinrate ${winrate}%`);
-
-    document.getElementById('total-matches').textContent = matchesPlayed;
-    document.getElementById('total-wins').textContent = wins;
-    document.getElementById('total-losses').textContent = losses;
-    document.getElementById('winrate').textContent = winrate.toFixed(2) + '%';
-    
-    //resetea el formulario
-    document.getElementById('stats-form').reset();
-});
+    if (wins + losses == matchesPlayed){//muestra los datos que se integraron
+        //resetea el formulario
+        document.getElementById('stats-form').reset();
+        
+        let winrate = matchesPlayed > 0 ? (wins * 100) / matchesPlayed : 0;
+        // muestra los datos q se ingresaron
+        alert(`Partidas Jugadas: ${matchesPlayed}\nVictorias: ${wins}\nDerrotas: ${losses} \nWinrate ${winrate}%`);
+        //cambia los valores de la tabla
+        document.getElementById('total-matches').textContent = matchesPlayed;
+        document.getElementById('total-wins').textContent = wins;
+        document.getElementById('total-losses').textContent = losses;
+        document.getElementById('winrate').textContent = winrate.toFixed() + '%';
+    }
+    else {
+        alert('La suma de tus derrotas y victorias debe ser igual al total de tus partidas')
+    }});
 
 //switch del color del boton con el mouse
 document.getElementById('boton').addEventListener('mouseover', function() {
