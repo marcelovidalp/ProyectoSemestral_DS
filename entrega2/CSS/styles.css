@@ -1,0 +1,247 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+header {
+    background-color: #222;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #6675fc;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover {
+    color: #6675fc;
+}
+
+main {
+    padding: 20px;
+}
+
+.bienvenido {
+    border-bottom: 2px solid #6675fc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.tabla-ranked {
+    padding-left: 10px;
+    background-color: #1c1c1e;
+    border-radius: 10px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tabla-ranked li {
+    padding: 10px;
+    border-bottom: 1px solid #3a3a3c;
+}
+
+#stats-container, #leaderboard-container {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+img {
+    width: 70px;
+    height: auto;
+}
+
+/* JUEGOS IMGS */
+figure {
+    display: flex;
+    justify-content: center; /* center x*/
+    align-items: center; /* center y */
+    gap: 20px; /*espacio entre imgs*/
+    flex-wrap: wrap; /*img se adapta si no cabe*/
+}
+
+figcaption {
+    display: flex;
+    justify-content: center;
+}
+
+.juego {
+    transition: transform 0.2s ease, box-shadow 0.1s ease; /*animacion y sombra*/
+    border-radius: 10px; /*redondeo de bordes*/
+    width: 100px; /*config ancho*/
+}
+
+/* EFECTO IMG*/
+.juego:hover {
+    transform: scale(1.1); /*config escala*/
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /*sombra*/
+    cursor: pointer; /*cambia el cursor*/
+}
+
+#tabla-stats {
+    background-color: #888;/*color de fondo*/
+}
+
+
+footer {
+    background-color: #222;/*color de fondo*/
+    text-align: center;/*alinea el texto (no un item)*/
+    padding: 10px;/*espaciado*/
+    position: fixed;/*pos fija*/
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #888;
+}
+
+/* FORMULARIO */
+#add-stats {
+    margin-top: 40px;
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#add-stats h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+#add-stats select {
+    display: flex;
+    
+    padding: 5px;
+    border-radius: 7px;
+}
+
+#add-stats form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-stats form label {
+    font-size: 1.1em;
+    margin-bottom: 5px;/*margen inferior*/
+    color: #6675fc;
+}
+
+#add-stats form input {
+    padding: 10px;
+    margin-bottom: 15px;/*margen inferior*/
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+#add-stats form input:focus {
+    outline: none;
+    border: 2px solid #6675fc;
+}
+
+#add-stats form button {
+    padding: 10px 15px;
+    font-size: 1.1em;
+    color: #f0f0f0;
+    background-color: #6675fc;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#add-stats form button:hover {
+    background-color: #45a29e;
+}
+
+/*TABLA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+table th {
+    background-color: #444;
+}
+
+table th:hover{
+    background-color: rgb(201, 62, 62);
+}
+
+table td:hover{
+    background-color: rgb(160, 50, 50);
+}
+
+caption {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #66fcf1;
+}
+
+/*LISTA */
+ol {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+ol li {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+figure {
+    margin: 20px 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+figcaption {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 10px;
+}
+

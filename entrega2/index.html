@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tracker</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Game Tracker</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#stats">Estadísticas</a></li>
+                <li><a href="#leaderboard">Tabla de Clasificación</a></li>
+                <li><a href="#settings">Configuraciones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2 class="bienvenido">Bienvenido al Game Tracker</h2>
+            <p>
+                Este sitio te ayuda a llevar un <b>seguimiento</b> de tu progreso en tus videojuegos favoritos. 
+                Haz un <i>click</i> en cada sección para ver más detalles.
+            </p>
+            <hr>
+            <figure>
+                <img class="juego" src="imgs/valo-logo.png" width="400">
+                <img class="juego" src="imgs/cs-logo.png" alt="">
+            </figure>
+            <figcaption>Selecciona tu juego.</figcaption>
+        </section>
+
+        <section id="stats">
+            <h2>Estadísticas</h2>
+            <br>
+            <!-- formulario stats-->
+            <section id="add-stats">
+                <h2>Añadir Nueva Partida</h2>
+                <form id="stats-form" name="partidas_form" action="postPartida.php" method="post">
+                    <label for="rondasTotales">Rondas Totales:</label>
+                    <input type="number" id="rondasTotales" name="rondasTotales" required>
+                    <label for="kills">Asesinatos:</label>
+                    <input type="number" id="kills" name="kills" required>
+                    <label for="deaths">Muertes:</label>
+                    <input type="number" id="deaths" name="deaths" required>
+                    <label for="assists">Asistencias:</label>
+                    <input type="number" id="assists" name="assists" required>
+
+                    <label for="win_losse">Victoria-Derrota:</label>
+                    <select name="win_losse" id="win_losse">
+                        <option value="">Victoria/Derrota</option>
+                        <option value="1">Victoria</option>
+                        <option value="2">Derrota</option>
+                    </select>
+
+                    <label for="game">Juego:</label>
+                    <select name="game" id="game" required>
+                        <option value="valorant">Valorant</option>
+                        <option value="cs2">Counter-Strike 2</option>
+                    </select>
+                    <label for="agente">Agente:</label>
+                    <select name="select_agente" id="select_agente" required>
+                        <option value="">Agente</option>
+                        <option value="1">Astra</option>
+                        <option value="2">Brimstone</option>
+                        <option value="3">Breach</option>
+                        <option value="4">Clove</option>
+                        <option value="5">Chamber</option>
+                        <option value="6">Deadlock</option>
+                        <option value="7">Fade</option>
+                        <option value="8">Gekko</option>
+                        <option value="9">Harbor</option>
+                        <option value="10">Iso</option>
+                        <option value="11">Neon</option>
+                        <option value="12">Skye</option>
+                        <option value="13">Raze</option>
+                        <option value="14">Jett</option>
+                        <option value="15">Omen</option>
+                        <option value="16">Reyna</option>
+                        <option value="17">Cypher</option>
+                        <option value="18">Viper</option>
+                        <option value="19">Sova</option>
+                        <option value="20">Phoenix</option>
+                        <option value="21">Killjoy</option>
+                        <option value="22">Vyse</option>
+                    </select>
+                    <label for="mapa">Mapa:</label>
+                    <select name="map" id="map">
+                        <option value="">Mapa</option>
+                        <option value="1">Sunset</option>
+                        <option value="2">Lotus</option>
+                        <option value="3">Pearl</option>
+                        <option value="4">Fracture</option>
+                        <option value="5">Breeze</option>
+                        <option value="6">Icebox</option>
+                        <option value="7">Bind</option>
+                        <option value="8">Haven</option>
+                        <option value="9">Split</option>
+                        <option value="10">Ascent</option>
+                    </select>
+                    
+                    <!-- boton append a la tabla -->
+                    <button id="boton" type="submit">AGREGAR PARTIDA</button>
+                </form>
+            </section>
+        </section>
+
+        <section id="lista_partidas">
+            <h2>Lista Partidas</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Juego</th>
+                        <th>Agente</th>
+                        <th>Mapa</th>
+                        <th>Rondas Totales</th>
+                        <th>Kills</th>
+                        <th>Deaths</th>
+                        <th>Assists</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
+        </footer>
+
+        <script src="JS/script.js"></script>
+    </main>
+</body>
+</html>
