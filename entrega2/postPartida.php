@@ -9,18 +9,19 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $rondasTotales = $_POST['rondas_totales'];
-    $kills = $_POST['kills'];
-    $deaths = $_POST['deaths'];
-    $assists = $_POST['assists'];
-    $win_losse = $_POST['win_losse'];
-    $game = $_POST['game'];
-    $agente = $_POST['select_agente'];
-    $mapa = $_POST['map'];
 
+    $agente = $_POST['select_agente'];
+    $assists = $_POST['assists'];
+    $deaths = $_POST['deaths'];
+    $juego_id = $POST['juego_id']
+    $kills = $_POST['kills'];
+    $mapa = $_POST['mapa']
+    $rondasTotales = $_POST['rondas_totales'];
+
+    $win_losse = $_POST['win_losse'];
     // Preparar consulta SQL
-    $sql = "INSERT INTO dw2_partidas (agente_id, map_id, rondas_totales, kills, deaths, assists, juego, win_losse)
-            VALUES ('$agente','$mapa', '$rondasTotales', '$kills', '$deaths', '$assists', '$win_losse', '$game', '$agente', '$mapa', $win_losse)";
+    $sql = "INSERT INTO dw2_partida (agente_id, assists, deaths, juego_id, kills, map_id, rondas_totales, win_losse)
+            VALUES ('$agente','$assists', '$deaths', $juego_id, '$kills', $mapa, '$rondasTotales', '$win_losse')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Partida añadida exitosamente.";
