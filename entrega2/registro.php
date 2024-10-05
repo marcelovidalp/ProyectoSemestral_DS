@@ -11,17 +11,26 @@ if ($conn->connect_error) {
 
 // Recibir datos del formulario
 $username = $_POST['username'];
-$pass = $_POST['password'];
-$email = $_post['email'];
+$pass = $_POST['password']
+$email = $_POST['email'];
 
-// Insertar el nuevo usuario en la base de datos
-$sql = "INSERT INTO dw2_users (user, passwd, correo) VALUES ('$username', '$pass', '$email)";
+// Verificar si el usuario ya existe
+$sql = "SELECT * FROM users WHERE username='$username'";
+$result = $conn->query($sql);
 
-if ($conn->query($sql) === TRUE) {
-    echo "Usuario registrado exitosamente.";
+if ($result->num_rows > 0) {
+    echo "El nombre de usuario ya está registrado.";
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    // Insertar nuevo usuario
+    $sql = "INSERT INTO users (user, passwd, correo) VALUES ('$username', '$pass', '$email')";
+    
+    if ($conn->query($sql) === TRUE) {
+        echo "Usuario registrado exitosamente.";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
 
+// Cerrar conexión
 $conn->close();
 ?>
