@@ -1,14 +1,8 @@
 <?php
  // Iniciar la sesión
-$host = "mysql.inf.uct.cl";  
-$user = "marcelo_vidal";    
-$password = "2x5EXaUNG0-ZcB360";      
-$dbname = "A2023_marcelo_vidal"; 
+session_start();
+require '/includes/conexion.php';
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
 // Recibir datos del formulario
 $username = $_POST['username'];
 $pass = $_POST['password'];
@@ -25,7 +19,7 @@ if ($result->num_rows > 0) {
     if (password_verify($pass, $row['passwd'])) {
         $_SESSION['username'] = $username; // Guardar el usuario en la sesión
         echo "Inicio de sesión exitoso. Bienvenido, $username.";
-        header("Location: /~marcelo.vidal/DesWeb/Proyecto/entrega2/templates/home.html");
+        header("Location: home.html");
         exit();
     } else {
         echo "Contraseña incorrecta.";
