@@ -1,5 +1,5 @@
 <?php
-session_start(); // Iniciar la sesión
+ // Iniciar la sesión
 $host = "mysql.inf.uct.cl";  
 $user = "marcelo_vidal";    
 $password = "2x5EXaUNG0-ZcB360";      
@@ -13,13 +13,8 @@ if ($conn->connect_error) {
 $username = $_POST['username'];
 $pass = $_POST['password'];
 
-// Validar entradas
-if (empty($username) || empty($pass)) {
-    die("Por favor, complete todos los campos.");
-}
-
 // Buscar al usuario en la base de datos usando declaración preparada
-$stmt = $conn->prepare("SELECT * FROM dw2_users WHERE user=?");
+$stmt = $conn->prepare("SELECT * FROM dw2_users WHERE username=?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
