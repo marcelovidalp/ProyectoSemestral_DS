@@ -1,5 +1,5 @@
 <?php
-include 'entrega2/includes/config.php';
+include '/~marcelo.vidal/DesWeb/Proyecto/entrega2/pages/config.php';
 
 // Recibir datos del formulario
 $username = $_POST['username'];
@@ -17,15 +17,16 @@ if (strlen($pass) < 8) {
 // Encriptar la contraseña
 $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-// Insertar el nuevo usuario en la base de datos usando declaración preparada
-$stmt = $conn->prepare("INSERT INTO dw2_users (user, passwd, correo) VALUES (?, ?, ?)");
-$stmt->bind_param("sss", $username, $hashed_pass, $email);
+$sql = "INSERT INTO dw2_users (user, passwd, correo) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
 
-if ($stmt->execute()) {
-    echo "Usuario registrado exitosamente.";
-} else {
-    echo "Error: " . $stmt->error;
-}
+// Vincular parámetros y ejecutar consulta preparada
+$stmt->bind_param('sss', $username, $pass, $email);
+
+if ($stmt->execute()) 
+    {echo "Nuevo player añadido correctamente: $nombre $pass <br>";}
+
+// Cerrar la consulta preparada
 
 $stmt->close();
 $conn->close();
