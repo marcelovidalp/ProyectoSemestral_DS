@@ -17,7 +17,7 @@ if (strlen($pass) < 8) {
 // Encriptar la contraseña
 $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO dw2_users (user, passwd, correo) VALUES (?, ?, ?)";
+$sql = "INSERT INTO dw2_users (username, passwd, correo) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 
 // Vincular parámetros y ejecutar consulta preparada
