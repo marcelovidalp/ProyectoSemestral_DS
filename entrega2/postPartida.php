@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $agente = $_POST['select_agente'];
     $assists = $_POST['assists'];
     $deaths = $_POST['deaths'];
-    $juego_id = $POST['juego_id']
+    $juego_id = $_POST['juego_id'];
     $kills = $_POST['kills'];
-    $mapa = $_POST['mapa']
+    $mapa = $_POST['mapa'];
     $rondasTotales = $_POST['rondas_totales'];
 
     $win_losse = $_POST['win_losse'];
