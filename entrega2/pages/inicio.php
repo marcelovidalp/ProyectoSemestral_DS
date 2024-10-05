@@ -30,11 +30,17 @@ if ($result->num_rows > 0) {
     if (password_verify($pass, $row['passwd'])) {
         $_SESSION['username'] = $username; // Guardar el usuario en la sesión
         echo "Inicio de sesión exitoso. Bienvenido, $username.";
+        header("Location: /~marcelo.vidal/DesWeb/Proyecto/entrega2/templates/home.html");
+        exit();
     } else {
         echo "Contraseña incorrecta.";
+        header("Location: /~marcelo.vidal/DesWeb/Proyecto/entrega2/index.html");
+        exit();
     }
 } else {
     echo "Usuario no encontrado.";
+    header("Location: /~marcelo.vidal/DesWeb/Proyecto/entrega2/index.html");
+    exit();
 }
 
 $stmt->close();
