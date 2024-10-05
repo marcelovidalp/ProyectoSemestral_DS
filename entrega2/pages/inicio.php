@@ -1,8 +1,14 @@
 <?php
 session_start(); // Iniciar la sesión
+$host = "mysql.inf.uct.cl";  
+$user = "marcelo_vidal";    
+$password = "2x5EXaUNG0-ZcB360";      
+$dbname = "A2023_marcelo_vidal"; 
 
-include '.../pages/config.php';
-
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 // Recibir datos del formulario
 $username = $_POST['username'];
 $pass = $_POST['password'];
