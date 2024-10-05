@@ -28,7 +28,7 @@ $sql = "INSERT INTO dw2_users (username, passwd, correo) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 
 // Vincular parámetros y ejecutar consulta preparada
-$stmt->bind_param('sis', $username, $hashed_pass, $email);
+$stmt->bind_param('sss', $username, $hashed_pass, $email);
 
 if ($stmt->execute()) 
     {echo "Nuevo player añadido correctamente: $username $hashed_pass <br>";}
