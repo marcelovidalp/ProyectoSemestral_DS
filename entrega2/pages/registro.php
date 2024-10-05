@@ -1,6 +1,13 @@
 <?php
-include '/~marcelo.vidal/DesWeb/Proyecto/entrega2/pages/config.php';
+$host = "mysql.inf.uct.cl";  
+$user = "marcelo_vidal";    
+$password = "2x5EXaUNG0-ZcB360";      
+$dbname = "A2023_marcelo_vidal"; 
 
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 // Recibir datos del formulario
 $username = $_POST['username'];
 $pass = $_POST['password'];
@@ -24,7 +31,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param('sss', $username, $pass, $email);
 
 if ($stmt->execute()) 
-    {echo "Nuevo player añadido correctamente: $nombre $pass <br>";}
+    {echo "Nuevo player añadido correctamente: $username $pass <br>";}
 
 // Cerrar la consulta preparada
 
