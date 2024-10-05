@@ -1,7 +1,7 @@
 <?php
 session_start(); // Iniciar la sesión
 
-include 'entrega2/includes/config.php';
+include '.../pages/config.php';
 
 // Recibir datos del formulario
 $username = $_POST['username'];
