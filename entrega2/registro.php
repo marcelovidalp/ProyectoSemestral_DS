@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 
 // Recibir datos del formulario
 $username = $_POST['username'];
-$pass = $_POST['password']
+$pass = $_POST['password'];
 $email = $_POST['email'];
 
 // Verificar si el usuario ya existe
