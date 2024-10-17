@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
+
+/* Header Sólido */
+header {
+    background-color: #1e1e1e; /* Fondo sólido oscuro */
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+    position: relative; /* No es necesario que sea fixed a menos que quieras que siempre esté visible */
+    z-index: 10; /* Para que se superponga a otros elementos */
+}
+
+/* Si deseas que el header sea sticky al hacer scroll */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Contenedor dentro del header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo del texto y navegación del header */
+header h1 {
+    font-size: 24px;
+    color: #FF4655; /* Color rojo de Valorant */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #FF4655; /* Fondo rojo al pasar el mouse */
+    color: white;
+    border-radius: 5px;
+}
+
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(145deg, #0a0a0a, #1e1e1e);
+    color: white;
+}
+
+/* JUEGOS IMGS */
+figure {
+    display: flex;
+    justify-content: center; /* center x*/
+    align-items: center; /* center y */
+    gap: 20px; /*espacio entre imgs*/
+    flex-wrap: wrap; /*img se adapta si no cabe*/
+}
+
+figcaption {
+    display: flex;
+    justify-content: center;
+}
+
+.juego {
+    transition: transform 0.2s ease, box-shadow 0.1s ease; /*animacion y sombra*/
+    border-radius: 10px; /*redondeo de bordes*/
+    width: 100px; /*config ancho*/
+}
+
+/* EFECTO IMG*/
+.juego:hover {
+    transform: scale(1.1); /*config escala*/
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /*sombra*/
+    cursor: pointer; /*cambia el cursor*/
+}
+
+#boton {
+    background-color: #FF4655;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#boton:hover {
+    background-color: #ff6f81;
+    box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
+    transform: scale(1.05);
+}
+
+nav a {
+    color: #FF4655;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: white;
+    border-bottom: 2px solid #FF4655;
+}
+
+.tabla-ranked li {
+    position: relative;
+    padding: 10px 0;
+    z-index: 1; /* Asegura que el texto esté encima del pseudo-elemento */
+    color: white; /* Color del texto del jugador */
+}
+
+.tabla-ranked li:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #FF4655;
+    transition: width 0.3s ease-in-out;
+    z-index: -1; /* Coloca el pseudo-elemento detrás del texto */
+}
+
+.tabla-ranked li:hover:before {
+    width: 100%;
+}
+
+
+body {
+    background-image: url('/entrega2/assets/imgs/valo-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+table th {
+    background-color: #444;
+}
+
+table th:hover{
+    background-color: rgb(201, 62, 62);
+}
+
+table td:hover{
+    background-color: rgb(160, 50, 50);
+}
+
+caption {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #66fcf1;
+}
+
+/* FORMULARIO */
+#add-stats {
+    margin-top: 40px;
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#add-stats h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+#add-stats select {
+    display: flex;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    background-color: #333;
+}
+#add-stats option {
+    color: white;
+}
+
+#add-stats form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-stats form label {
+    font-size: 1.1em;
+    margin-bottom: 5px;/*margen inferior*/
+    color: #FF4655;
+}
+
+#add-stats form input {
+    padding: 10px;
+    margin-bottom: 15px;/*margen inferior*/
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+#add-stats form input:focus {
+    outline: none;
+    border: 2px solid #FF4655;
+}
+
+/* Estilo HUD para las estadísticas */
+.hud-scoreboard {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: rgba(30, 30, 30, 0.9); /* Fondo más oscuro */
+    border: 2px solid #FF4655;
+    box-shadow: 0 0 20px rgba(255, 70, 85, 0.5);
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.stat-block {
+    text-align: center;
+    color: white;
+}
+
+.stat-block .label {
+    font-size: 14px;
+    color: #FF4655;
+    margin-bottom: 10px;
+}
+
+.stat-block .value {
+    font-size: 28px;
+    font-weight: bold;
+}

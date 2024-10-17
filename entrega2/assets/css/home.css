@@ -1,46 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(145deg, #0a0a0a, #1e1e1e);
+    color: white;
     margin: 0;
     padding: 0;
     background-color: #1a1a1a;
-    color: #f0f0f0;
+
 }
 
+/* Header Sólido */
 header {
-    background-color: #222;
-    padding: 20px;
-    text-align: center;
+    background-color: #1e1e1e; /* Fondo sólido oscuro */
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+    position: relative; /* No es necesario que sea fixed a menos que quieras que siempre esté visible */
+    z-index: 10; /* Para que se superponga a otros elementos */
 }
 
+/* Si deseas que el header sea sticky al hacer scroll */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Contenedor dentro del header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo del texto y navegación del header */
 header h1 {
+    font-size: 24px;
+    color: #FF4655; /* Color rojo de Valorant */
     margin: 0;
-    font-size: 2.5em;
-    color: #6675fc;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 nav ul {
     list-style: none;
-    padding: 0;
-    margin: 20px 0 0;
     display: flex;
-    justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
-    margin: 0 15px;
+    margin-left: 20px;
 }
 
 nav ul li a {
-    color: #f0f0f0;
     text-decoration: none;
-    font-size: 1.2em;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 nav ul li a:hover {
-    color: #6675fc;
+    background-color: #FF4655; /* Fondo rojo al pasar el mouse */
+    color: white;
+    border-radius: 5px;
 }
-
 main {
     padding: 20px;
 }

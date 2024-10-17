@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(145deg, #1a1a1a, #333333); /* Fondo gris oscuro */
+    color: #e0e0e0; /* Texto blanco apagado */
+}
+
+/* Botones estilo militar */
+#boton {
+    background-color: #ee7410; /* Verde militar */
+    border: none;
+    padding: 10px 20px;
+    color: #e0e0e0;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#boton:hover {
+    background-color: #fc940d; /* Verde más claro al hacer hover */
+    box-shadow: 0 0 10px rgba(128, 39, 4, 0.8); /* Efecto de sombra verde */
+    transform: scale(1.05);
+}
+
+/* Enlaces */
+nav a {
+    color: #c0b283; /* Color dorado */
+    text-decoration: none;
+    padding: 10px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: white;
+    border-bottom: 2px solid #c0b283; /* Subrayado dorado */
+}
+
+/* Lista de clasificación */
+.tabla-ranked li {
+    position: relative;
+    padding: 10px 0;
+    z-index: 1; /* Asegura que el texto esté encima del pseudo-elemento */
+    color: #e0e0e0; /* Color del texto */
+}
+
+.tabla-ranked li:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #4b5320; /* Verde militar */
+    transition: width 0.3s ease-in-out;
+    z-index: -1; /* Coloca el pseudo-elemento detrás del texto */
+}
+
+.tabla-ranked li:hover:before {
+    width: 100%;
+}
+
+/* Fondo del cuerpo */
+body {
+    background-image: url('/entrega2/assets/imgs/cs2-bg.jpeg'); /* Cambia esta URL por una imagen de CS2 */
+    background-size: cover;
+    background-position: center;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    background-color: #333; /* Fondo oscuro para celdas */
+    color: #e0e0e0;
+}
+
+table th {
+    background-color: #4b5320; /* Fondo verde para encabezados */
+}
+
+table th:hover {
+    background-color: #6b8f23; /* Hover más claro en verde */
+}
+
+table td:hover {
+    background-color: #555; /* Hover más claro en las celdas */
+}
+
+caption {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #c0b283; /* Color dorado */
+}
+
+/* Formulario de estadísticas */
+#add-stats {
+    margin-top: 40px;
+    background-color: #2a2a2a; /* Fondo más oscuro */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#add-stats h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #c0b283; /* Color dorado */
+}
+
+#add-stats select {
+    display: flex;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    background-color: #333;
+}
+
+#add-stats option {
+    color: white;
+}
+
+#add-stats form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-stats form label {
+    font-size: 1.1em;
+    margin-bottom: 5px; /* Margen inferior */
+    color: #c0b283; /* Dorado */
+}
+
+#add-stats form input {
+    padding: 10px;
+    margin-bottom: 15px; /* Margen inferior */
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+#add-stats form input:focus {
+    outline: none;
+    border: 2px solid #4b5320; /* Borde verde militar al enfocar */
+}
+
+/* Estilo HUD para las estadísticas */
+.hud-scoreboard {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: rgba(17, 16, 16, 0.9); /* Fondo oscuro */
+    border: 2px solid #f77c09; /* Borde dorado */
+    box-shadow: 0 0 20px rgba(235, 139, 15, 0.5); /* Sombra dorada */
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.stat-block {
+    text-align: center;
+    color: #e0e0e0;
+}
+
+.stat-block .label {
+    font-size: 14px;
+    color: #c0b283; /* Color dorado */
+    margin-bottom: 10px;
+}
+
+.stat-block .value {
+    font-size: 28px;
+    font-weight: bold;
+}

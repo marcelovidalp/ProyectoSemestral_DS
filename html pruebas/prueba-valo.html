@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>Game Tracker</h1>
+                <nav>
+                    <ul>
+                        <li><a href="home.html">Inicio</a></li>
+                        <li><a href="#stats">Estadísticas</a></li>
+                        <li><a href="#leaderboard">Tabla de Clasificación</a></li>
+                        <li><a href="#settings">Configuraciones</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <div class="container">
+                <section id="stats">
+                    <h2>Estadísticas</h2>
+                    <div class="hud-scoreboard">
+                        <div class="stat-block">
+                            <div class="label">Partidas Jugadas</div>
+                            <div class="value" id="total-matches">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="label">Victorias</div>
+                            <div class="value" id="total-wins">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="label">Derrotas</div>
+                            <div class="value" id="total-losses">0</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="label">Winrate</div>
+                            <div class="value" id="winrate">0%</div>
+                        </div>
+                    </div>
+                    <br>
+                    <!-- Formulario para añadir estadísticas -->
+                    <section id="add-stats">
+                        <h2>Añadir Nueva Estadística</h2>
+                        <form id="stats-form">
+                            <label for="matchesPlayed">Partidas Jugadas:</label>
+                            <input type="number" id="matchesPlayed" name="matchesPlayed" required>
+                            <label for="wins">Victorias:</label>
+                            <input type="number" id="wins" name="wins" required>
+                            <label for="losses">Derrotas:</label>
+                            <input type="number" id="losses" name="losses" required>
+                            <button id="boton" type="submit">AGREGAR</button>
+                        </form>
+                    </section>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </body>
+</html>
+
+
