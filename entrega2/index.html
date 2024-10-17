@@ -32,110 +32,84 @@
                 <img class="juego" src="imgs/valo-logo.png" width="400">
                 <img class="juego" src="imgs/cs-logo.png" alt="">
             </figure>
-            <figcaption>Selecciona tu juego.</figcaption>
+            <figcaption>Seleciona tu juego.</figcaption>
         </section>
 
         <section id="stats">
             <h2>Estadísticas</h2>
+            <table id="tabla-stats" border="1">
+                <thead>
+                    <tr>
+                        <th>Partidas Jugadas</th>
+                        <th>Victorias</th>
+                        <th>Derrotas</th>
+                        <th>Winrate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="total-matches"></td>
+                        <td id="total-wins"></td>
+                        <td id="total-losses"></td>
+                        <td id="winrate">0%</td>
+                    </tr>
+                </tbody>
+            </table>
             <br>
             <!-- formulario stats-->
             <section id="add-stats">
-                <h2>Añadir Nueva Partida</h2>
-                <form id="stats-form" name="partidas_form" action="postPartida.php" method="post">
-                    <label for="rondasTotales">Rondas Totales:</label>
-                    <input type="number" id="rondasTotales" name="rondasTotales" required>
-                    <label for="kills">Asesinatos:</label>
-                    <input type="number" id="kills" name="kills" required>
-                    <label for="deaths">Muertes:</label>
-                    <input type="number" id="deaths" name="deaths" required>
-                    <label for="assists">Asistencias:</label>
-                    <input type="number" id="assists" name="assists" required>
-
-                    <label for="win_losse">Victoria-Derrota:</label>
-                    <select name="win_losse" id="win_losse">
-                        <option value="">Victoria/Derrota</option>
-                        <option value="1">Victoria</option>
-                        <option value="2">Derrota</option>
-                    </select>
-
-                    <label for="game">Juego:</label>
-                    <select name="game" id="game" required>
-                        <option value="valorant">Valorant</option>
-                        <option value="cs2">Counter-Strike 2</option>
-                    </select>
-                    <label for="agente">Agente:</label>
-                    <select name="select_agente" id="select_agente" required>
-                        <option value="">Agente</option>
-                        <option value="1">Astra</option>
-                        <option value="2">Brimstone</option>
-                        <option value="3">Breach</option>
-                        <option value="4">Clove</option>
-                        <option value="5">Chamber</option>
-                        <option value="6">Deadlock</option>
-                        <option value="7">Fade</option>
-                        <option value="8">Gekko</option>
-                        <option value="9">Harbor</option>
-                        <option value="10">Iso</option>
-                        <option value="11">Neon</option>
-                        <option value="12">Skye</option>
-                        <option value="13">Raze</option>
-                        <option value="14">Jett</option>
-                        <option value="15">Omen</option>
-                        <option value="16">Reyna</option>
-                        <option value="17">Cypher</option>
-                        <option value="18">Viper</option>
-                        <option value="19">Sova</option>
-                        <option value="20">Phoenix</option>
-                        <option value="21">Killjoy</option>
-                        <option value="22">Vyse</option>
-                    </select>
-                    <label for="mapa">Mapa:</label>
-                    <select name="map" id="map">
-                        <option value="">Mapa</option>
-                        <option value="1">Sunset</option>
-                        <option value="2">Lotus</option>
-                        <option value="3">Pearl</option>
-                        <option value="4">Fracture</option>
-                        <option value="5">Breeze</option>
-                        <option value="6">Icebox</option>
-                        <option value="7">Bind</option>
-                        <option value="8">Haven</option>
-                        <option value="9">Split</option>
-                        <option value="10">Ascent</option>
-                    </select>
-                    
+                <h2>Añadir Nueva Estadística</h2>
+                <form id="stats-form">
+                    <label for="matchesPlayed">Partidas Jugadas:</label>
+                    <input type="number" id="matchesPlayed" name="matchesPlayed" required>
+                    <label for="wins">Victorias:</label>
+                    <input type="number" id="wins" name="wins" required>
+                    <label for="losses">Derrotas:</label>
+                    <input type="number" id="losses" name="losses" required>
                     <!-- boton append a la tabla -->
-                    <button id="boton" type="submit">AGREGAR PARTIDA</button>
+                    <button id="boton" type="submit">AGREGAR</button>
                 </form>
             </section>
         </section>
 
-        <section id="lista_partidas">
-            <h2>Lista Partidas</h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Juego</th>
-                        <th>Agente</th>
-                        <th>Mapa</th>
-                        <th>Rondas Totales</th>
-                        <th>Kills</th>
-                        <th>Deaths</th>
-                        <th>Assists</th>
-                        <th>Resultado</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
+        <section id="leaderboard">
+            <h2>Tabla de Clasificación</h2>
+            <ol class="tabla-ranked">
+                <li><b>KRU keznitdeus</b> - 980 pts</li>
+                <li><b>mono</b> - 646 pts</li>
+                <li><b>jnz</b> - 525 pts</li>
+                <li><b>maxhinh</b> - 514 pts</li>
+                <li><b>Secret Agent</b> - 509 pts</li>
+                <li><b>USP DarkZIN</b> - 507 pts</li>
+                <li><b>sistemzz</b> - 500 pts</li>
+                <li><b>p4g4nus</b> - 469 pts</li>
+            </ol>
         </section>
 
-        <footer>
-            <p>&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
-        </footer>
-
-        <script src="JS/script.js"></script>
+        <section id="settings">
+            <h2>Configuraciones</h2>
+            <p>Ajusta las preferencias de tu cuenta:</p>
+            <ul>
+                <li>Notificaciones</li>
+                <li>Preferencias de idioma</li>
+                <li>Modo oscuro</li>
+            </ul>
+        </section>
+        <div class="validacion">
+            <p>
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img style="border:0;width:88px;height:31px"
+                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                        alt="¡CSS Válido!" />
+                </a>
+            </p>
+        </div>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="JS/script.js"></script>
 </body>
 </html>

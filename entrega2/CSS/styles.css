@@ -137,13 +137,6 @@ footer p {
     margin-bottom: 20px;
 }
 
-#add-stats select {
-    display: flex;
-    
-    padding: 5px;
-    border-radius: 7px;
-}
-
 #add-stats form {
     display: flex;
     flex-direction: column;
