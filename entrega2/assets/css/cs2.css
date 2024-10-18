@@ -1,14 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
 
+/* Header Sólido */
+header {
+    background-color: #1e1e1e; /* Fondo sólido oscuro */
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+    position: relative; /* No es necesario que sea fixed a menos que quieras que siempre esté visible */
+    z-index: 10; /* Para que se superponga a otros elementos */
+}
+
+/* Si deseas que el header sea sticky al hacer scroll */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+/* Estilo del texto y navegación del header */
+header h1 {
+    font-size: 24px;
+    color: #f59f00; /* color cs */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Contenedor dentro del header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo del texto y navegación del header */
+header h1 {
+    font-size: 24px;
+    color: #f87000; /* Color rojo de Valorant */
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
 body {
     font-family: 'Rajdhani', sans-serif;
     background: linear-gradient(145deg, #1a1a1a, #333333); /* Fondo gris oscuro */
     color: #e0e0e0; /* Texto blanco apagado */
 }
-
-/* Botones estilo militar */
+/* boton AGREGAR */
 #boton {
-    background-color: #ee7410; /* Verde militar */
+    background-color: #ff9100; 
     border: none;
     padding: 10px 20px;
     color: #e0e0e0;
@@ -25,9 +66,36 @@ body {
     transform: scale(1.05);
 }
 
-/* Enlaces */
+
+/* JUEGOS IMGS */
+figure {
+    display: flex;
+    justify-content: center; /* center x*/
+    align-items: center; /* center y */
+    gap: 20px; /*espacio entre imgs*/
+    flex-wrap: wrap; /*img se adapta si no cabe*/
+}
+
+figcaption {
+    display: flex;
+    justify-content: center;
+}
+
+.juego {
+    transition: transform 0.2s ease, box-shadow 0.1s ease; /*animacion y sombra*/
+    border-radius: 10px; /*redondeo de bordes*/
+    width: 100px; /*config ancho*/
+}
+
+/* EFECTO IMG*/
+.juego:hover {
+    transform: scale(1.1); /*config escala*/
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /*sombra*/
+    cursor: pointer; /*cambia el cursor*/
+}
+
 nav a {
-    color: #c0b283; /* Color dorado */
+    color: #fe7300;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
@@ -35,9 +103,8 @@ nav a {
 
 nav a:hover {
     color: white;
-    border-bottom: 2px solid #c0b283; /* Subrayado dorado */
+    border-bottom: 2px solid #FF4655;
 }
-
 /* Lista de clasificación */
 .tabla-ranked li {
     position: relative;
