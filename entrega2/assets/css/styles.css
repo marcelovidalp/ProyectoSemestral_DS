@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap');
+
+/* Estilos generales */
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(145deg, #0a0a0a, #1e1e1e);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1e1e1e;
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header h1 {
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a:hover {
+    color: white;
+    border-radius: 5px;
+}
+
+/* JUEGOS IMGS - Imágenes y figuras de los juegos */
+figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.juego {
+    transition: transform 0.2s ease, box-shadow 0.1s ease;
+    border-radius: 10px;
+    width: 100px;
+}
+
+.juego:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+/* FORMULARIO - Estilos base del formulario */
+#add-stats {
+    margin-top: 40px;
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+#add-stats h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+#add-stats select, #add-stats input {
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    background-color: #333;
+    border: none;
+    color: white;
+}
+
+#add-stats form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-stats form label {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+#add-stats form input:focus {
+    outline: none;
+}
+
+#add-stats form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 5px;
+}
+
+#add-stats form button:hover {
+    transform: scale(1.05);
+}
+
+/* TABLA STATS */
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+table th:hover, table td:hover {
+    background-color: rgb(160, 50, 50);
+}
+
+/* FOOTER */
+footer {
+    background-color: #222;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #888;
+}
