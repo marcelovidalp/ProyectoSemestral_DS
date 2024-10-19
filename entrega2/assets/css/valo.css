@@ -67,7 +67,7 @@ table th:hover, table td:hover {
 
 /* BACKGROUND - Imagen de fondo de Valorant */
 body {
-    background-image: url('/entrega2/assets/imgs/valo-bg.jpg');
+    background-image: url('assets/imgs/valo-bg.jpg');
     background-size: cover;
     background-position: center;
 }
