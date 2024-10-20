@@ -35,8 +35,8 @@ function enviarEstadisticas(event) {
     const juego_id = detectarJuego();  // Detectar el juego
     const wins = document.getElementById('win').value === "win" ? 1 : 0;
     const kills = parseInt(document.getElementById('kills').value);
-    const deaths = parseInt(document.getElementById('deaths').value);
-    const assists = parseInt(document.getElementById('assits').value);
+    const deaths = parseInt(document.getElementById('muertes').value);
+    const assists = parseInt(document.getElementById('asistencias').value);
     const agente_id = document.getElementById('agente_id').value;
     const mapa_id = document.getElementById('mapa_id').value;
 
