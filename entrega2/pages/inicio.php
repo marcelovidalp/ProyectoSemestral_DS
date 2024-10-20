@@ -1,6 +1,7 @@
 <?php
 require 'config.inc';
 
+// Configuración de cookies de sesión
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
@@ -24,10 +25,14 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
+    
     // Verificar la contraseña
     if (password_verify($pass, $row['passwd'])) {
-        $_SESSION['username'] = $username; // Guardar el usuario en la sesión
-        echo "Inicio de sesión exitoso. Bienvenido, $username.";
+        // Guardar el ID del usuario en la sesión (usando id_users)
+        $_SESSION['user_id'] = $row['id_users'];  
+        $_SESSION['username'] = $username;
+        
+        // Redireccionar al home o a la página deseada
         header("Location: ../templates/home.html");
         exit();
     } else {

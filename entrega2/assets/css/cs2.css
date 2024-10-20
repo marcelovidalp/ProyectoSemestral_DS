@@ -82,7 +82,7 @@ table th:hover, table td:hover {
 
 /* BACKGROUND COUNTER */
 body {
-    background-image: url('assets/imgs/cs2-bg.jpeg');
+    background-image: url('..entrega2/assets/imgs/cs2-bg.jpeg');
     background-size: cover;
     background-position: center;
 }
