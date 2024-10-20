@@ -13,20 +13,22 @@ session_set_cookie_params([
 
 session_start();
 
-// Recibir datos del formulario
-$ganada = isset($_POST['win']) && $_POST['win'] == '1' ? 1 : 0;
-$kills = intval($_POST['kills']);
-$muertes = intval($_POST['muertes']);
-$asistencias = intval($_POST['asistencias']);
-$mapa_id = intval($_POST['mapa_id']);
-$agente_id = intval($_POST['agente_id']);
-$juego_id = intval($_POST['juego_id']);
-$user_id = intval($_POST['user_id']); // Si tienes sesión activa, obtén el user_id de la sesión
+$data = json_decode(file_get_contents('php://input'), true);
+
+// Asignar los datos a las variables
+$ganada = isset($data['wins']) && $data['wins'] == 1 ? 1 : 0;
+$kills = intval($data['kills']);
+$muertes = intval($data['deaths']);
+$asistencias = intval($data['assists']);
+$mapa_id = intval($data['mapa_id']);
+$agente_id = intval($data['agente_id']);
+$juego_id = intval($data['juego_id']);
+$user_id = intval($data['user_id']);
 
 // Inserción de datos en la tabla Partidas
-$sql = "INSERT INTO dw2_partidas (resultado, asesinatos, muertes, asistencias, id_mapa, id_agente, id_juego, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO dw2_partidas (resultado, asesinatos, muertes, asistencias, id_mapa, id_agente, id_user, id_juego) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iiiiiiii", $ganada, $kills, $muertes, $asistencias, $mapa_id, $agente_id, $juego_id, $user_id);
+$stmt->bind_param("iiiiiiii", $ganada, $kills, $muertes, $asistencias, $mapa_id, $agente_id, $user_id, %juego_id);
 
 if ($stmt->execute()) {
     echo json_encode(["status" => "success", "message" => "Partida añadida exitosamente"]);

@@ -37,24 +37,16 @@ function enviarEstadisticas(event) {
     const kills = parseInt(document.getElementById('kills').value);
     const deaths = parseInt(document.getElementById('muertes').value);
     const assists = parseInt(document.getElementById('asistencias').value);
-    const agente_id = document.getElementById('agente_id').value;
-    const mapa_id = document.getElementById('mapa_id').value;
+    const agente_id = parseInt(document.getElementById('agente_id').value);  // Convertir a entero
+    const mapa_id = parseInt(document.getElementById('mapa_id').value);  // Convertir a entero
 
     console.log("Datos recogidos:", { juego_id, wins, kills, deaths, assists, agente_id, mapa_id });  // Log para verificar los datos
 
     // Validar campos
-    if (agente_id === "0" || mapa_id === "0") {
+    if (agente_id === 0 || mapa_id === 0) {
         alert("Por favor, selecciona un agente y un mapa válidos.");
         return;
     }
-
-    // Llamar a la función para actualizar la interfaz
-    actualizarEstadisticas.call({
-        totalMatches: document.getElementById('total-matches'),
-        totalWins: document.getElementById('total-wins'),
-        totalLosses: document.getElementById('total-losses'),
-        winrate: document.getElementById('winrate')
-    }, wins, kills, deaths, assists);
 
     // Enviar los datos al servidor
     fetch('../pages/postPartida.php', {
@@ -95,7 +87,7 @@ fetch('../pages/getAgentes.php')
         let agenteSelect = document.getElementById('agente_id');
         agentes.forEach(agente => {
             let option = document.createElement('option');
-            option.value = agente.id;
+            option.value = agente.id_agentes;
             option.textContent = agente.nombre + ' (' + agente.rol + ')';
             agenteSelect.appendChild(option);
         });
@@ -120,7 +112,7 @@ function cargarMapas() {
 
             mapas.forEach(mapa => {
                 let option = document.createElement('option');
-                option.value = mapa.id;
+                option.value = mapa.id_mapas;
                 option.textContent = mapa.nombre;
                 mapaSelect.appendChild(option);
             });
