@@ -101,15 +101,34 @@ fetch('../pages/getAgentes.php')
         });
     }); 
 
-// Función para cargar los Mapas
-fetch('../pages/getMapas.php')
-    .then(response => response.json())
-    .then(mapas => {
-        let mapaSelect = document.getElementById('mapa_id');
-        mapas.forEach(mapa => {
-            let option = document.createElement('option');
-            option.value = mapa.id;
-            option.textContent = mapa.nombre;
-            mapaSelect.appendChild(option);
+// Función para cargar los Mapas según el juego detectado
+function cargarMapas() {
+    const juego_id = detectarJuego();  // Detectar el juego actual
+
+    if (!juego_id) {
+        console.error("Juego no detectado");
+        return;
+    }
+
+    // Realizar el fetch pasando el juego_id como parámetro en la URL
+    fetch(`../pages/getMapas.php?juego_id=${juego_id}`)
+        .then(response => response.json())
+        .then(mapas => {
+            console.log("Mapas recibidos:", mapas);  // Verifica los datos en la consola
+            let mapaSelect = document.getElementById('mapa_id');
+            mapaSelect.innerHTML = ""; // Limpiar las opciones anteriores
+
+            mapas.forEach(mapa => {
+                let option = document.createElement('option');
+                option.value = mapa.id;
+                option.textContent = mapa.nombre;
+                mapaSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar los mapas:", error);
         });
-    });
+}
+
+// Llamar a cargarMapas al cargar la página
+document.addEventListener("DOMContentLoaded", cargarMapas);

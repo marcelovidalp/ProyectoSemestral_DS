@@ -12,7 +12,7 @@ session_set_cookie_params([
 
 session_start();
 
-$sql = "SELECT id, nombre, rol FROM Agentes";
+$sql = "SELECT id_agentes, nombre, rol FROM dw2_agentes";
 $result = $conn->query($sql);
 
 $agentes = [];

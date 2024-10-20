@@ -1,4 +1,5 @@
 <?php
+
 require 'config.inc';
 
 session_set_cookie_params([
@@ -23,7 +24,7 @@ $juego_id = intval($_POST['juego_id']);
 $user_id = intval($_POST['user_id']); // Si tienes sesión activa, obtén el user_id de la sesión
 
 // Inserción de datos en la tabla Partidas
-$sql = "INSERT INTO Partidas (ganada, kills, muertes, asistencias, mapa_id, agente_id, juego_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO dw2_partidas (resultado, asesinatos, muertes, asistencias, id_mapa, id_agente, id_juego, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("iiiiiiii", $ganada, $kills, $muertes, $asistencias, $mapa_id, $agente_id, $juego_id, $user_id);
 
