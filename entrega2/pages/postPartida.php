@@ -12,10 +12,6 @@ session_set_cookie_params([
 
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.html');
-    exit();
-}
 // Recibir datos del formulario
 $ganada = isset($_POST['win']) && $_POST['win'] == '1' ? 1 : 0;
 $kills = intval($_POST['kills']);

@@ -12,10 +12,6 @@ session_set_cookie_params([
 
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: index.html');
-    exit();
-}
 // Recibir datos del formulario
 $username = $_POST['username'];
 $pass = $_POST['password'];
