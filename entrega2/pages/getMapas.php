@@ -20,7 +20,7 @@ if ($juego_id === 0) {
 }
 
 // Realiza la consulta para obtener los mapas del juego específico
-$query = "SELECT id_mapas, nombre FROM mapas WHERE id_juego = ?";
+$query = "SELECT id_mapas, nombre FROM dw2_mapas WHERE id_juego = ?";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, 'i', $juego_id);
 mysqli_stmt_execute($stmt);
