@@ -12,7 +12,7 @@ session_set_cookie_params([
 
 session_start();
 
-Recibir datos del formulario
+// Recibir datos del formulario
 $username = $_POST['username'];
 $pass = $_POST['password'];
 $email = $_POST['email'];
@@ -40,11 +40,10 @@ $stmt->bind_param('sss', $username, $hashed_pass, $email);
 
 if ($stmt->execute()) 
     {echo "Nuevo player añadido correctamente: $username $hashed_pass <br>";
-    header("Location: ../templates/home.html");
+    header("Location: /~marcelo.vidal/DesWeb/Proyecto/entrega2/templates/home.html");
     exit();}
 
 // Cerrar la consulta preparada
-
 $stmt->close();
 $conn->close();
 ?>
