@@ -25,14 +25,14 @@ nav ul li a:hover {
     transform: scale(1.005);
 }
 
-nav a {
+.csref nav a {
     color: #ff9100;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
 }
 
-nav a:hover {
+.csref nav a:hover {
     color: white;
     border-bottom: 2px solid #ff9100;
 }

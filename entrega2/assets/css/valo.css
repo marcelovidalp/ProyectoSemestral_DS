@@ -25,11 +25,16 @@ nav ul li a:hover {
     transform: scale(1.005);
 }
 
-nav a {
+.valoref nav a {
     color: #FF4655;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
+}
+
+.valoref nav a:hover {
+    color: white;
+    border-bottom: 2px solid #FF4655;
 }
  /* FF4655 */
 figcaption {
