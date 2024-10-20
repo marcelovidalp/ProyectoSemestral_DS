@@ -3,10 +3,6 @@ header h1 {
     color: #FF4655; /* Rojo Valorant */
 }
 
-nav ul li a:hover {
-    background-color: #FF4655; /* Fondo rojo al pasar el mouse */
-}
-
 #boton {
     background-color: #FF4655;
     border: none;
@@ -25,17 +21,28 @@ nav ul li a:hover {
     transform: scale(1.005);
 }
 
-.valoref nav a {
+#valoref a {
     color: #FF4655;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
 }
 
-.valoref nav a:hover {
+#valoref a:hover {
     color: white;
     border-bottom: 2px solid #FF4655;
 }
+
+/* Ajusta el estilo del h1 para que mantenga el formato */
+#valoref {
+    font-size: 2em;
+    margin: 0;
+}
+
+#valoref a {
+    display: inline-block;
+}
+
  /* FF4655 */
 figcaption {
     text-align: center;
@@ -76,7 +83,7 @@ table th:hover, table td:hover {
 
 /* BACKGROUND VALORANT */
 body {
-    background-image: url('assets/imgs/valo-bg.jpg');
+    background-image: url('.../assets/imgs/valo-bg.jpg');
     background-size: cover;
     background-position: center;
 }
