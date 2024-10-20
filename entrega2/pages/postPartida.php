@@ -1,33 +1,39 @@
 <?php
+require 'config.inc';
 
-use PSpell\Config;
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
 
-$config = 'config.php';
-include $config;
+session_start();
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.html');
+    exit();
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $rondasTotales = $_POST['rondas_totales'];
-    $kills = $_POST['kills'];
-    $deaths = $_POST['deaths'];
-    $assists = $_POST['assists'];
-    $win_losse = $_POST['win_losse'];
-    $game = $_POST['game'];
-    $agente = $_POST['select_agente'];
-    $mapa = $_POST['map'];
+// Recibir datos del formulario
+$ganada = isset($_POST['win']) && $_POST['win'] == '1' ? 1 : 0;
+$kills = intval($_POST['kills']);
+$muertes = intval($_POST['muertes']);
+$asistencias = intval($_POST['asistencias']);
+$mapa_id = intval($_POST['mapa_id']);
+$agente_id = intval($_POST['agente_id']);
+$juego_id = intval($_POST['juego_id']);
+$user_id = intval($_POST['user_id']); // Si tienes sesión activa, obtén el user_id de la sesión
 
-    // Preparar consulta SQL
-    $sql = "INSERT INTO dw2_partidas (agente_id, map_id, rondas_totales, kills, deaths, assists, juego, win_losse)
-            VALUES ('$agente','$mapa', '$rondasTotales', '$kills', '$deaths', '$assists', '$win_losse', '$game', '$agente', '$mapa', $win_losse)";
+// Inserción de datos en la tabla Partidas
+$sql = "INSERT INTO Partidas (ganada, kills, muertes, asistencias, mapa_id, agente_id, juego_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iiiiiiii", $ganada, $kills, $muertes, $asistencias, $mapa_id, $agente_id, $juego_id, $user_id);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Partida añadida exitosamente.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+if ($stmt->execute()) {
+    echo json_encode(["status" => "success", "message" => "Partida añadida exitosamente"]);
+} else {
+    echo json_encode(["status" => "error", "message" => "Error al añadir la partida: " . $stmt->error]);
 }
-$conn->close();
 ?>

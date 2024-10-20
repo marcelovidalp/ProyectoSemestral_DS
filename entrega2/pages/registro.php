@@ -1,10 +1,20 @@
 <?php
-$config = 'config.php';
-include 
+require 'config.inc';
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.html');
+    exit();
 }
 // Recibir datos del formulario
 $username = $_POST['username'];

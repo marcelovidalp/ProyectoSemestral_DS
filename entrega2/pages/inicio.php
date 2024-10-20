@@ -1,11 +1,20 @@
 <?php
-$config = '/entrega2/pages/config.php';
+require 'config.inc';
 
-include $config;
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => isset($_SERVER['HTTPS']),
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.html');
+    exit();
 }
 // Recibir datos del formulario
 $username = $_POST['username'];
