@@ -35,8 +35,8 @@ function enviarEstadisticas(event) {
     const juego_id = detectarJuego();  // Detectar el juego
     const wins = document.getElementById('win').value === "win" ? 1 : 0;
     const kills = parseInt(document.getElementById('kills').value);
-    const deaths = parseInt(document.getElementById('deaths').value);
-    const assists = parseInt(document.getElementById('assits').value);
+    const deaths = parseInt(document.getElementById('muertes').value);
+    const assists = parseInt(document.getElementById('asistencias').value);
     const agente_id = document.getElementById('agente_id').value;
     const mapa_id = document.getElementById('mapa_id').value;
 
@@ -57,7 +57,7 @@ function enviarEstadisticas(event) {
     }, wins, kills, deaths, assists);
 
     // Enviar los datos al servidor
-    fetch('/~marcelo.vidal/DesWeb/Proyecto/entrega2/pages/postPartida.php', {
+    fetch('../pages/postPartida.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ juego_id, wins, kills, deaths, assists, agente_id, mapa_id })
@@ -89,7 +89,7 @@ document.getElementById('boton').addEventListener('mouseout', function() {
 });
 
 // Función para cargar los Agentes
-fetch('/~marcelo.vidal/DesWeb/Proyecto/entrega2/pages/getAgentes.php')
+fetch('../pages/getAgentes.php')
     .then(response => response.json())
     .then(agentes => {
         let agenteSelect = document.getElementById('agente_id');
@@ -102,7 +102,7 @@ fetch('/~marcelo.vidal/DesWeb/Proyecto/entrega2/pages/getAgentes.php')
     }); 
 
 // Función para cargar los Mapas
-fetch('/~marcelo.vidal/DesWeb/Proyecto/entrega2/pages/getMapas.php')
+fetch('../pages/getMapas.php')
     .then(response => response.json())
     .then(mapas => {
         let mapaSelect = document.getElementById('mapa_id');
