@@ -1,4 +1,4 @@
-/* HEADER - Colores específicos de Valorant */
+/* HEADER */
 header h1 {
     color: #FF4655; /* Rojo Valorant */
 }
@@ -22,7 +22,7 @@ nav ul li a:hover {
 #boton:hover {
     background-color: #ff6f81;
     box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
-    transform: scale(1.05);
+    transform: scale(1.005);
 }
 
 nav a {
@@ -41,7 +41,7 @@ nav a:hover {
     border-bottom: 2px solid #FF4655;
 }
 
-/* FORMULARIO - Colores específicos de Valorant */
+/* FORMULARIO VALORANT */
 #add-stats form label {
     color: #FF4655; /* color valo */
 }
@@ -60,7 +60,7 @@ nav a:hover {
     box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
 }
 
-/* TABLA STATS - Color de las tablas en Valorant */
+/* TABLA STATS VALORANT */
 table th, table td {
     background-color: #333;
 }
@@ -69,14 +69,14 @@ table th:hover, table td:hover {
     background-color: rgb(201, 62, 62); /* Rojo Valorant */
 }
 
-/* BACKGROUND - Imagen de fondo de Valorant */
+/* BACKGROUND VALORANT */
 body {
     background-image: url('assets/imgs/valo-bg.jpg');
     background-size: cover;
     background-position: center;
 }
 
-/* HUD STATS - Estilo HUD en Valorant */
+/* HUD STATS VALORANT */
 .hud-scoreboard {
     display: flex;
     justify-content: space-around;
