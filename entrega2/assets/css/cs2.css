@@ -25,17 +25,28 @@ nav ul li a:hover {
     transform: scale(1.005);
 }
 
-.csref nav a {
-    color: #ff9100;
+#csref a {
+    color: #fc940d;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
 }
 
-.csref nav a:hover {
+#csref a:hover {
     color: white;
-    border-bottom: 2px solid #ff9100;
+    border-bottom: 2px solid #fc940d;
 }
+
+/* Ajusta el estilo del h1 para que mantenga el formato */
+#csoref {
+    font-size: 2em;
+    margin: 0;
+}
+
+#csoref a {
+    display: inline-block;
+}
+
 figcaption {
     text-align: center;
     color: black;
