@@ -32,6 +32,10 @@ nav a {
     font-weight: bold;
 }
 
+figcaption {
+    text-align: center;
+}
+
 nav a:hover {
     color: white;
     border-bottom: 2px solid #FF4655;
@@ -39,7 +43,7 @@ nav a:hover {
 
 /* FORMULARIO - Colores específicos de Valorant */
 #add-stats form label {
-    color: #FF4655; /* Color rojo de Valorant */
+    color: #FF4655; /* color valo */
 }
 
 #add-stats form input:focus {
@@ -67,7 +71,7 @@ table th:hover, table td:hover {
 
 /* BACKGROUND - Imagen de fondo de Valorant */
 body {
-    background-image: url('assets/imgs/valo-bg.jpg');
+    background-image: url('/entrega2/assets/imgs/valo-bg.jpg');
     background-size: cover;
     background-position: center;
 }

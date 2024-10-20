@@ -1,41 +1,115 @@
-// envio del form
-document.getElementById('stats-form').addEventListener('submit', function() {
-    //no udapte pagina
-    event.preventDefault();
+// Función 1: Detectar el juego desde el HTML y devolver su ID correspondiente
+function detectarJuego() {
+    const currentPage = window.location.pathname.split("/").pop();  // Detectar el archivo HTML
+    console.log("Archivo HTML detectado:", currentPage);  // Log para verificar el archivo
 
-    // obtiene los valores del form
-    let matchesPlayed = parseInt(document.getElementById('matchesPlayed').value);
-    let wins = parseInt(document.getElementById('wins').value);
-    let losses = parseInt(document.getElementById('losses').value);
-
-    if (wins + losses == matchesPlayed){//muestra los datos que se integraron
-        //resetea el formulario
-        document.getElementById('stats-form').reset();
-        
-        let winrate = matchesPlayed > 0 ? (wins * 100) / matchesPlayed : 0;
-        // muestra los datos q se ingresaron
-        alert(`Partidas Jugadas: ${matchesPlayed}\nVictorias: ${wins}\nDerrotas: ${losses} \nWinrate ${winrate}%`);
-        //cambia los valores de la tabla
-        document.getElementById('total-matches').textContent = matchesPlayed;
-        document.getElementById('total-wins').textContent = wins;
-        document.getElementById('total-losses').textContent = losses;
-        document.getElementById('winrate').textContent = winrate.toFixed() + '%';
+    if (currentPage === "valo.html") {
+        return 1;  // Valorant tiene ID 1 en la BD
+    } else if (currentPage === "cs2.html") {
+        return 2;  // Counter-Strike 2 tiene ID 2 en la BD
+    } else {
+        return null;
     }
-    else {
-        alert('La suma de tus derrotas y victorias debe ser igual al total de tus partidas')
-    }});
+}
 
-//switch del color del boton con el mouse
+// Función 2: Actualizar la interfaz con las estadísticas ingresadas (uso de parámetros y `this`)
+function actualizarEstadisticas(wins, kills, deaths, assists) {
+    console.log("Actualizando estadísticas");  // Log para verificar
+
+    let totalMatches = parseInt(this.totalMatches.textContent) + 1;
+    let totalWins = wins ? parseInt(this.totalWins.textContent) + 1 : parseInt(this.totalWins.textContent);
+    let totalLosses = wins ? parseInt(this.totalLosses.textContent) : parseInt(this.totalLosses.textContent) + 1;
+    let winrate = totalWins > 0 ? (totalWins * 100) / totalMatches : 0;
+
+    // Actualizar los valores en la interfaz
+    this.totalMatches.textContent = totalMatches;
+    this.totalWins.textContent = totalWins;
+    this.totalLosses.textContent = totalLosses;
+    this.winrate.textContent = winrate.toFixed() + '%';
+}
+
+// Función 3: Enviar las estadísticas al servidor usando fetch (maneja el evento de envío del formulario)
+function enviarEstadisticas(event) {
+    event.preventDefault();  // Evita el refresco de la página
+
+    const juego_id = detectarJuego();  // Detectar el juego
+    const wins = document.getElementById('win').value === "win" ? 1 : 0;
+    const kills = parseInt(document.getElementById('kills').value);
+    const deaths = parseInt(document.getElementById('deaths').value);
+    const assists = parseInt(document.getElementById('assits').value);
+    const agente_id = document.getElementById('agente_id').value;
+    const mapa_id = document.getElementById('mapa_id').value;
+
+    console.log("Datos recogidos:", { juego_id, wins, kills, deaths, assists, agente_id, mapa_id });  // Log para verificar los datos
+
+    // Validar campos
+    if (agente_id === "0" || mapa_id === "0") {
+        alert("Por favor, selecciona un agente y un mapa válidos.");
+        return;
+    }
+
+    // Llamar a la función para actualizar la interfaz
+    actualizarEstadisticas.call({
+        totalMatches: document.getElementById('total-matches'),
+        totalWins: document.getElementById('total-wins'),
+        totalLosses: document.getElementById('total-losses'),
+        winrate: document.getElementById('winrate')
+    }, wins, kills, deaths, assists);
+
+    // Enviar los datos al servidor
+    fetch('postPartida.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ juego_id, wins, kills, deaths, assists, agente_id, mapa_id })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Respuesta del servidor:", data);
+        if (data.status === 'success') {
+            alert("Partida añadida exitosamente.");
+        } else {
+            alert("Hubo un error al añadir la partida.");
+        }
+    })
+    .catch(error => {
+        console.error("Error al enviar los datos:", error);
+        alert("Error al guardar las estadísticas.");
+    });
+}
+
+// Manejadores de eventos
+document.getElementById('stats-form').addEventListener('submit', enviarEstadisticas);
 document.getElementById('boton').addEventListener('mouseover', function() {
-    this.style.backgroundColor = '#45a29e'; // switch color
+    this.style.backgroundColor = '#ff6f81';  // Cambia el color al pasar el mouse
+    console.log("Mouse sobre el botón:", this.id);  // Log para verificar el evento
 });
-
-//reset color del boton
 document.getElementById('boton').addEventListener('mouseout', function() {
-    this.style.backgroundColor = '#66fcf1'; 
+    this.style.backgroundColor = '#FF4655';  // Restaura el color al salir el mouse
+    console.log("Mouse fuera del botón:", this.id);  // Log para verificar el evento
 });
 
-//cambia el texto del boton
-document.getElementById('boton').addEventListener('click', function() {
-    this.innerText = 'Procesando...';//switch texto
-});
+// Función para cargar los Agentes
+fetch('getAgentes.php')
+    .then(response => response.json())
+    .then(agentes => {
+        let agenteSelect = document.getElementById('agente_id');
+        agentes.forEach(agente => {
+            let option = document.createElement('option');
+            option.value = agente.id;
+            option.textContent = agente.nombre + ' (' + agente.rol + ')';
+            agenteSelect.appendChild(option);
+        });
+    });
+
+// Función para cargar los Mapas
+fetch('getMapas.php')
+    .then(response => response.json())
+    .then(mapas => {
+        let mapaSelect = document.getElementById('mapa_id');
+        mapas.forEach(mapa => {
+            let option = document.createElement('option');
+            option.value = mapa.id;
+            option.textContent = mapa.nombre;
+            mapaSelect.appendChild(option);
+        });
+    });

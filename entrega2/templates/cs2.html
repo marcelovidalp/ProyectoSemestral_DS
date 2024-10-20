@@ -31,9 +31,6 @@
             </figure>
             <figcaption>Seleciona tu juego.</figcaption>
         </section>
-        <section id="rango-frame">
-            <img src="" alt="">
-            <p>aki va tu rango</p>
         </section>
         <!-- formulario stats-->
         <section id="add-stats">
@@ -46,6 +43,15 @@
                 </select>
                 <label for="kills">Asesinatos?</label>
                 <input type="number" id="kills" name="kills" required>
+                <label for="deaths">Muertes?</label>
+                <input type="number" id="deaths" required>
+                <label for="assits">Asistencias?</label>
+                <input type="number" id="assits" required>
+                <label for="assits">Mapa?</label>
+                <select name="agente" id="mapa" required>
+                    <option id="0">Selecciona el mapa</option>
+                    <!-- PARA TRAER LOS AGENTES SE DEBE HACER UN FETCH -->
+                </select>
                 <!-- boton append a la tabla -->
                 <button id="boton" type="submit">AGREGAR</button>
             </form>
@@ -104,6 +110,6 @@
     <footer>
         <p>&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
     </footer>
-    <script src="../assets/JS/script.js"></script>
+    <!-- rekiere scritp diferente -->
 </body>
 </html>

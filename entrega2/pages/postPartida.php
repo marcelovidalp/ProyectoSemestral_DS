@@ -1,8 +1,9 @@
 <?php
-$host = "mysql.inf.uct.cl";  
-$user = "marcelo_vidal";    
-$password = "2x5EXaUNG0-ZcB360";      
-$dbname = "A2023_marcelo_vidal"; 
+
+use PSpell\Config;
+
+$config = 'config.php';
+include $config;
 
 $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn->connect_error) {

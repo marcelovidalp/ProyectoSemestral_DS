@@ -37,17 +37,31 @@
             <form id="stats-form">
                 <label for="win-select">Ganaste?:</label>
                 <select name="win" id="win" required>
-                    <option id=0 value="win">SI</option>
-                    <option id=1 value="losse">NO</option>
+                    <option id="0" value="win">SI</option>
+                    <option id="1" value="losse">NO</option>
                 </select>
+        
                 <label for="kills">Asesinatos?</label>
                 <input type="number" id="kills" name="kills" required>
-                <label for="agente">Agente?</label>
-                <select name="agente" id="agente">
-                    <option id="0">Selecciona tu agente</option>
-                    <!-- PARA TRAER LOS AGENTES SE DEBE HACER UN FETCH -->
+        
+                <label for="muertes">Muertes?</label>
+                <input type="number" id="muertes" name="muertes" required>
+        
+                <label for="asistencias">Asistencias?</label>
+                <input type="number" id="asistencias" name="asistencias" required>
+        
+                <label for="mapa_id">Mapa?</label>
+                <select name="mapa_id" id="mapa_id" required>
+                    <option id="0" value="0">Selecciona el mapa</option>
+                    <!-- Opciones llenadas dinámicamente -->
                 </select>
-                <!-- boton append a la tabla -->
+        
+                <label for="agente_id">Agente?</label>
+                <select name="agente_id" id="agente_id" required>
+                    <option id="0" value="0">Selecciona tu agente</option>
+                    <!-- Opciones llenadas dinámicamente -->
+                </select>
+        
                 <button id="boton" type="submit">AGREGAR</button>
             </form>
         </section>
