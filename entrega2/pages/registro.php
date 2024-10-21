@@ -40,7 +40,7 @@ $stmt->bind_param('sss', $username, $hashed_pass, $email);
 
 if ($stmt->execute()) 
     {echo "Nuevo player añadido correctamente: $username $hashed_pass <br>";
-    header("Location: ../templates/home.html");
+    header("Location: ../index.html");
     exit();}
 
 // Cerrar la consulta preparada

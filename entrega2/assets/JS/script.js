@@ -1,25 +1,26 @@
-// Función para detectar el juego desde el HTML y devolver su ID correspondiente
+// ---FUNCION 1 --- detecta el juego por el html, devuelve 1 o 2
 function detectarJuego() {
-    const currentPage = window.location.pathname.split("/").pop();  // Detectar el archivo HTML
-    console.log("Archivo HTML detectado:", currentPage);  // Log para verificar el archivo
-
+    const currentPage = window.location.pathname.split("/").pop();  // detecta html
+    console.log("Archivo HTML detectado:", currentPage);  // log para verificar
+    //valida
     if (currentPage === "valo.html") {
-        return 1;  // Valorant tiene ID 1 en la BD
+        return 1;  // valo tiene id 1 en BD
     } else if (currentPage === "cs2.html") {
-        return 2;  // Counter-Strike 2 tiene ID 2 en la BD
+        return 2;  // cs tiene id 2 en BD
     } else {
-        return null;  // Juego no detectado
+        console.log("no se detecto el juegohtml")
+        return null;  // no detecta juego
     }
 }
-
+// --FUNCION 2--  cargamos estadisticas desde BD
 function cargarEstadisticas() {
-    const juego_id = detectarJuego();  // Detectar el juego actual
+    const juego_id = detectarJuego();  // rescata juego.html
 
     if (!juego_id) {
         console.error("No se pudo detectar el juego");
         return;
     }
-
+    // fetch pasandole el id del juego
     fetch(`../pages/getEstadisticas.php?juego_id=${juego_id}`)
         .then(response => {
             if (!response.ok) {
@@ -27,7 +28,7 @@ function cargarEstadisticas() {
             }
             return response.json();
         })
-        .then(data => {
+        .then(data => {//obtenemos estiqueta ids del html
             if (data.status === 'success') {
                 let totalMatchesElem, totalWinsElem, totalLossesElem, winrateElem;
                 const currentPage = window.location.pathname.split("/").pop();
@@ -46,8 +47,7 @@ function cargarEstadisticas() {
                     console.error("No se pudo detectar la página");
                     return;
                 }
-
-                // Verificar si los elementos existen antes de intentar modificarlos
+                //validamos si los elementos existen en juego.html
                 if (totalMatchesElem && totalWinsElem && totalLossesElem && winrateElem) {
                     // Actualizar las estadísticas en la interfaz
                     totalMatchesElem.textContent = data.total_partidas;
@@ -65,13 +65,10 @@ function cargarEstadisticas() {
             console.error("Error al cargar las estadísticas:", error);
         });
 }
-
+// cargamos estadisticas desde el principio
 document.addEventListener("DOMContentLoaded", cargarEstadisticas);
 
-// Llamar a cargarEstadisticas cuando la página se cargue
-document.addEventListener("DOMContentLoaded", cargarEstadisticas);
-
-// Función para actualizar la interfaz con las estadísticas ingresadas
+// --FUNCION 3-- para actualizar la interfaz con las estadísticas ingresadas
 function actualizarEstadisticas(wins, kills, deaths, assists) {
     console.log("Actualizando estadísticas");
 
@@ -92,14 +89,13 @@ function actualizarEstadisticas(wins, kills, deaths, assists) {
         console.error("No se pudo detectar la página");
         return;
     }
-
-    // Obtener los valores actuales de las estadísticas
+    // obtenemos y parseamos las estadisticas
     let totalMatches = parseInt(totalMatchesElem.textContent) + 1;
     let totalWins = wins ? parseInt(totalWinsElem.textContent) + 1 : parseInt(totalWinsElem.textContent);
     let totalLosses = wins ? parseInt(totalLossesElem.textContent) : parseInt(totalLossesElem.textContent) + 1;
     let winrate = totalWins > 0 ? (totalWins * 100) / totalMatches : 0;
 
-    // Actualizar los valores en la interfaz
+    // update de valores en la intefaz
     totalMatchesElem.textContent = totalMatches;
     totalWinsElem.textContent = totalWins;
     totalLossesElem.textContent = totalLosses;
@@ -108,7 +104,7 @@ function actualizarEstadisticas(wins, kills, deaths, assists) {
     console.log(`Partidas: ${totalMatches}, Victorias: ${totalWins}, Derrotas: ${totalLosses}, Winrate: ${winrate.toFixed()}%`);
 }
 
-// Función para enviar las estadísticas al servidor usando fetch
+// --FUNCION 4-- envia estadisticas a BD usando FETCH
 function enviarEstadisticas(event) {
     event.preventDefault();
 
@@ -123,8 +119,7 @@ function enviarEstadisticas(event) {
     const deaths = parseInt(document.getElementById('muertes').value);
     const assists = parseInt(document.getElementById('asistencias').value);
     const mapa_id = parseInt(document.getElementById('mapa_id').value);
-
-    // Validación de valores numéricos
+    // validamos entrys con int
     if (isNaN(kills) || isNaN(deaths) || isNaN(assists) || isNaN(mapa_id) || mapa_id === 0) {
         alert("Por favor, selecciona valores válidos y numéricos.");
         return;
@@ -132,19 +127,19 @@ function enviarEstadisticas(event) {
 
     let agente_id;
     const currentPage = window.location.pathname.split("/").pop();  // Detectar el archivo HTML
-
+    //  ---en valo.html se ingresa agente !!!---
     if (currentPage === "valo.html") {
-        agente_id = parseInt(document.getElementById('agente_id').value);  // Convertir a entero para Valorant
+        agente_id = parseInt(document.getElementById('agente_id').value);  // convertir a entero
         if (isNaN(agente_id) || agente_id === 0) {
             alert("Por favor, selecciona un agente válido.");
             return;
-        }
+        }//imprimimos valores
         console.log("Datos recogidos para Valorant:", { juego_id, wins, kills, deaths, assists, agente_id, mapa_id });
     } else {
         console.log("Datos recogidos para Counter-Strike 2:", { juego_id, wins, kills, deaths, assists, mapa_id });
     }
 
-    // Enviar los datos al servidor
+    // ENVIAMOS DATOS A BD
     const datos = currentPage === "valo.html"
         ? { juego_id, wins, kills, deaths, assists, agente_id, mapa_id }
         : { juego_id, wins, kills, deaths, assists, mapa_id };
@@ -163,7 +158,7 @@ function enviarEstadisticas(event) {
     .then(data => {
         console.log("Respuesta del servidor:", data);
         if (data.status === 'success') {
-            // Actualizar estadísticas en la interfaz después de agregar la partida con éxito
+            // update estadisticas despues de agregar a la BD
             actualizarEstadisticas(wins, kills, deaths, assists);
             alert("Partida añadida exitosamente.");
         } else {
@@ -188,7 +183,8 @@ document.getElementById('boton').addEventListener('mouseout', function() {
 });
 
 // Función para cargar los Agentes
-fetch('../pages/getAgentes.php')
+function CargarAgentes() {
+    fetch('../pages/getAgentes.php')
     .then(response => {
         if (!response.ok) {
             throw new Error('Error al cargar los agentes');
@@ -196,29 +192,33 @@ fetch('../pages/getAgentes.php')
         return response.json();
     })
     .then(agentes => {
+        console.log("Agentes recibidos: ", agentes);
         let agenteSelect = document.getElementById('agente_id');
-        agenteSelect.innerHTML = "";  // Limpiar opciones previas
-        agentes.forEach(agente => {
-            let option = document.createElement('option');
-            option.value = agente.id_agentes;
-            option.textContent = agente.nombre + ' (' + agente.rol + ')';
+        agenteSelect.innerHTML = ""; // lipia select 
+        agentes.forEach(agente => {// carga los agentes
+            let option = document.createElement('option');//crea el option
+            option.value = agente.id_agentes;//ponemos valor al value del option
+            option.textContent = agente.nombre + ' (' + agente.rol + ')';// concat rol en el option
             agenteSelect.appendChild(option);
         });
     })
     .catch(error => {
         console.error("Error al cargar los agentes:", error);
     });
+}
 
-// Función para cargar los Mapas según el juego detectado
-function cargarMapas() {
+document.addEventListener("DOMContentLoaded", CargarAgentes())
+
+
+// --FUNCION 5-- para cargar los Mapas según el juego detectado
+function cargarMapas() {    
     const juego_id = detectarJuego();  // Detectar el juego actual
 
     if (!juego_id) {
         console.error("Juego no detectado");
         return;
     }
-
-    // Realizar el fetch pasando el juego_id como parámetro en la URL
+    // FETCH con el id del juego
     fetch(`../pages/getMapas.php?juego_id=${juego_id}`)
         .then(response => {
             if (!response.ok) {
