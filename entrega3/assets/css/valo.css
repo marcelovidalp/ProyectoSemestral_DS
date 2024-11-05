@@ -1,0 +1,110 @@
+/* HEADER */
+header h1 {
+    color: #FF4655; /* Rojo Valorant */
+}
+
+#boton {
+    background-color: #FF4655;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#boton:hover {
+    background-color: #ff6f81;
+    box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
+    transform: scale(1.005);
+}
+
+#valoref a {
+    color: #FF4655;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: bold;
+}
+
+#valoref a:hover {
+    color: white;
+    border-bottom: 2px solid #FF4655;
+}
+
+/* Ajusta el estilo del h1 para que mantenga el formato */
+#valoref {
+    font-size: 2em;
+    margin: 0;
+}
+
+#valoref a {
+    display: inline-block;
+}
+
+ /* FF4655 */
+figcaption {
+    text-align: center;
+}
+
+nav a:hover {
+    color: white;
+    border-bottom: 2px solid #FF4655;
+}
+
+/* FORMULARIO VALORANT */
+#add-stats form label {
+    color: #FF4655; /* color valo */
+}
+
+#add-stats form input:focus {
+    border: 2px solid #FF4655;
+}
+
+#add-stats form button {
+    background-color: #FF4655;
+    color: white;
+}
+
+#add-stats form button:hover {
+    background-color: #ff6f81;
+    box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
+}
+
+/* TABLA STATS VALORANT */
+table th, table td {
+    background-color: #333;
+}
+
+table th:hover, table td:hover {
+    background-color: rgb(201, 62, 62); /* Rojo Valorant */
+}
+
+/* BACKGROUND VALORANT */
+body {
+    background-image: url('..entrega2/assets/imgs/cs2-bg.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* HUD STATS VALORANT */
+.hud-scoreboard {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: rgba(30, 30, 30, 0.9); /* Fondo más oscuro */
+    border: 2px solid #FF4655;
+    box-shadow: 0 0 20px rgba(255, 70, 85, 0.5);
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.stat-block .label {
+    color: #FF4655;
+}
+
+.stat-block .value {
+    font-size: 28px;
+    font-weight: bold;
+}
