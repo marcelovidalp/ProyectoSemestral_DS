@@ -80,12 +80,12 @@ table th:hover, table td:hover {
     background-color: rgb(255, 152, 67); 
 }
 
-/* BACKGROUND COUNTER */
-body {
+/* BACKGROUND COUNTER no funciona en pillan */
+/* body {
     background-image: url('..entrega2/assets/imgs/cs2-bg.jpeg');
     background-size: cover;
     background-position: center;
-}
+} */
 
 /* HUD STATS COUNTER */
 .hud-scoreboard {

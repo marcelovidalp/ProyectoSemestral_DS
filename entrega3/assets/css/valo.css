@@ -81,12 +81,12 @@ table th:hover, table td:hover {
     background-color: rgb(201, 62, 62); /* Rojo Valorant */
 }
 
-/* BACKGROUND VALORANT */
-body {
+/* BACKGROUND VALORANT  no funciona en pillan*/
+/* body {
     background-image: url('..entrega2/assets/imgs/cs2-bg.jpeg');
     background-size: cover;
     background-position: center;
-}
+} */
 
 /* HUD STATS VALORANT */
 .hud-scoreboard {
