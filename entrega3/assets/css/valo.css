@@ -1,6 +1,6 @@
 /* HEADER */
 header h1 {
-    color: #FF4655; /* Rojo Valorant */
+    color: #ff2436; /* Rojo Valorant */
 }
 
 #boton {
@@ -72,6 +72,9 @@ nav a:hover {
     box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
 }
 
+#add-stats h2 {
+    color: black;
+}
 /* TABLA STATS VALORANT */
 table th, table td {
     background-color: #333;
@@ -82,11 +85,11 @@ table th:hover, table td:hover {
 }
 
 /* BACKGROUND VALORANT */
-body {
-    background-image: url('../imgs/cs2-bg.jpeg');
+/* body {
+    background-image: url('../imgs/valo-bg.jpg');
     background-size: cover;
     background-position: center;
-}
+} */
 
 /* HUD STATS VALORANT */
 .hud-scoreboard {

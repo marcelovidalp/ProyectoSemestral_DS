@@ -1,133 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tracker</title>
+    <title>Game Tracker - Valorant</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/valo.css">
-    <!-- bootstrap -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="bg-dark text-white py-3">
+        <div class="container text-center">
+            <h1 class="display-4"><a href="home.html" class="text-danger text-decoration-none">Valorant Tracker</a></h1>
+            <p class="lead text-muted">Controla tu progreso en Valorant</p>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <section class="text-center mb-5">
+            <h2 class="display-5">Selecciona tu Juego</h2>
+            <p class="text-muted">Explora las estadísticas y el progreso en cada juego.</p>
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-3 mb-3">
+                    <a href="valo.html">
+                        <img src="../assets/imgs/valo-logo.png" class="img-fluid shadow rounded" alt="Valorant Logo" style="max-width: 150px;">
+                    </a>
+                    <p class="mt-2">Valorant</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <a href="cs2.html">
+                        <img src="../assets/imgs/cs-logo.png" class="img-fluid shadow rounded" alt="Counter Strike Logo" style="max-width: 150px;">
+                    </a>
+                    <p class="mt-2">Counter Strike</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="add-stats" class="bg-light p-4 rounded shadow-sm my-5">
+            <h2 class="text-center mb-4">Añadir Nueva Partida</h2>
+            <form id="stats-form">
+                <div class="form-group">
+                    <label for="win">¿Ganaste?:</label>
+                    <select name="win" id="win" class="form-control" required>
+                        <option value="win">Sí</option>
+                        <option value="loss">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kills">Asesinatos:</label>
+                    <input type="number" id="kills" name="kills" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="deaths">Muertes:</label>
+                    <input type="number" id="deaths" name="deaths" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="assists">Asistencias:</label>
+                    <input type="number" id="assists" name="assists" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="map">Mapa:</label>
+                    <select name="map" id="map" class="form-control" required>
+                        <option value="">Selecciona el mapa</option>
+                        <!-- Opciones de mapas dinámicamente -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-4">Agregar</button>
+            </form>
+        </section>
+
+        <section id="stats" class="bg-dark text-white p-4 rounded shadow-sm">
+            <h2 class="text-center mb-4">Estadísticas Generales</h2>
+            <div class="row text-center">
+                <div class="col-md-3 mb-3">
+                    <div class="p-3 border rounded">
+                        <h5>Partidas Jugadas</h5>
+                        <p id="valo-total-matches" class="display-4">0</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="p-3 border rounded">
+                        <h5>Victorias</h5>
+                        <p id="valo-total-wins" class="display-4">0</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="p-3 border rounded">
+                        <h5>Derrotas</h5>
+                        <p id="valo-total-losses" class="display-4">0</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="p-3 border rounded">
+                        <h5>Winrate</h5>
+                        <p id="valo-winrate" class="display-4">0%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p class="mb-0">&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
+        <p class="small text-muted">Mantente al tanto de tu rendimiento en Valorant</p>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-</head>
-<body>
-    <header>
-        <div class="container header-container">
-            <nav id="valoref">
-            <h1><a href="home.html">Game Tracker</a></h1>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <section id="home">
-            <hr>
-            <figure>
-                <a href="valo.html">
-                    <img class="juego" src="../assets/imgs/valo-logo.png" width="400">
-                </a>
-                <a href="cs2.html">
-                    <img class="juego" src="../assets/imgs/cs-logo.png" width="400">
-                </a>
-            </figure>
-            <figcaption>Seleciona tu juego.</figcaption>
-        </section>
-        <!-- formulario stats-->
-        <section id="add-stats">
-            <h2>Añadir Nueva Partida</h2>
-            <form id="stats-form">
-                <label for="win-select">Ganaste?:</label>
-                <select name="win" id="win" required>
-                    <option id="0" value="win">SI</option>
-                    <option id="1" value="losse">NO</option>
-                </select>
-        
-                <label for="kills">Asesinatos?</label>
-                <input type="number" id="kills" name="kills" required>
-        
-                <label for="muertes">Muertes?</label>
-                <input type="number" id="muertes" name="muertes" required>
-        
-                <label for="asistencias">Asistencias?</label>
-                <input type="number" id="asistencias" name="asistencias" required>
-        
-                <label for="mapa_id">Mapa?</label>
-                <select name="mapa_id" id="mapa_id" required>
-                    <option id="0" value="0">Selecciona el mapa</option>
-                    <!-- Opciones llenadas dinámicamente -->
-                </select>
-        
-                <label for="agente_id">Agente?</label>
-                <select name="agente_id" id="agente_id" required>
-                    <option id="0" value="0">Selecciona tu agente</option>
-                    <!-- Opciones llenadas dinámicamente -->
-                </select>
-        
-                <button id="boton" type="submit">AGREGAR</button>
-            </form>
-        </section>
-        <!-- tabla stats -->
-        <section id="stats">
-            <h2>Estadísticas</h2>
-            <div class="hud-scoreboard">
-                <div class="stat-block">
-                    <div class="label">Partidas Jugadas</div>
-                    <div class="value" id="valo-total-matches">0</div>
-                </div>
-                <div class="stat-block">
-                    <div class="label">Victorias</div>
-                    <div class="value" id="valo-total-wins">0</div>
-                </div>
-                <div class="stat-block">
-                    <div class="label">Derrotas</div>
-                    <div class="value" id="valo-total-losses">0</div>
-                </div>
-                <div class="stat-block">
-                    <div class="label">Winrate</div>
-                    <div class="value" id="valo-winrate">0%</div>
-                </div>
-            </div>
-            <br>
-        </section>
-
-        <section id="leaderboard">
-            <h2>Tabla de Clasificación</h2>
-            <ol class="tabla-ranked">
-                <li><b>KRU keznitdeus</b> - 980 pts</li>
-                <li><b>mono</b> - 646 pts</li>
-                <li><b>jnz</b> - 525 pts</li>
-                <li><b>maxhinh</b> - 514 pts</li>
-                <li><b>Secret Agent</b> - 509 pts</li>
-                <li><b>USP DarkZIN</b> - 507 pts</li>
-                <li><b>sistemzz</b> - 500 pts</li>
-                <li><b>p4g4nus</b> - 469 pts</li>
-            </ol>
-        </section>
-
-        <section id="settings">
-            <h2>Configuraciones</h2>
-            <p>Ajusta las preferencias de tu cuenta:</p>
-            <ul>
-                <li>Notificaciones</li>
-                <li>Preferencias de idioma</li>
-                <li>Modo oscuro</li>
-            </ul>
-        </section>
-        <div class="validacion">
-            <p>
-                <a href="http://jigsaw.w3.org/css-validator/check/referer">
-                    <img style="border:0;width:88px;height:31px"
-                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
-                        alt="¡CSS Válido!" />
-                </a>
-            </p>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
-    </footer>
-    <script src="../assets\js\script.js"></script>
 </body>
 </html>
