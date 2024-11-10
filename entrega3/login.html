@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro e Inicio de Sesión</title>
+    <!-- Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/registro_inicio.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-dark text-white d-flex justify-content-center align-items-center vh-100">
+
+    <div class="container p-5 border rounded bg-secondary shadow">
+        <h2 class="text-center mb-4">Iniciar Sesión</h2>
+
+        <!-- Mostrar mensaje de error si no se encontró el usuario -->
+        <?php
+            session_start();
+            if (isset($_SESSION['login_error'])):
+        ?>
+            <div class="alert alert-danger text-center">
+                <?php 
+                    echo $_SESSION['login_error'];
+                    unset($_SESSION['login_error']); // Eliminar el mensaje de error después de mostrarlo
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="../pages/inicio.php" method="POST" class="mb-3">
+            <div class="form-group">
+                <label for="username" class="text-white">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" class="form-control bg-dark text-white" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="text-white">Contraseña:</label>
+                <input type="password" id="password" name="password" class="form-control bg-dark text-white" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+            <div class="text-center mt-3">
+                <a href="registro.html" class="text-light">¿No tienes cuenta? Regístrate aquí</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
     }
 } else {
     echo "Usuario no encontrado.";
-    header("Location: ../index.html");
+    header("Location: ../index.html?error=1");
     exit();
 }
 
