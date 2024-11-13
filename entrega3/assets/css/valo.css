@@ -85,11 +85,11 @@ table th:hover, table td:hover {
 }
 
 /* BACKGROUND VALORANT */
-/* body {
+body {
     background-image: url('../imgs/valo-bg.jpg');
     background-size: cover;
     background-position: center;
-} */
+}
 
 /* HUD STATS VALORANT */
 .hud-scoreboard {

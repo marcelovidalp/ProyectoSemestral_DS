@@ -1,247 +1,576 @@
-// ---FUNCION 1 --- detecta el juego por el html, devuelve 1 o 2
-function detectarJuego() {
-    const currentPage = window.location.pathname.split("/").pop();  // detecta html
-    console.log("Archivo HTML detectado:", currentPage);  // log para verificar
-    //valida
-    if (currentPage === "valo.html") {
-        return 1;  // valo tiene id 1 en BD
-    } else if (currentPage === "cs2.html") {
-        return 2;  // cs tiene id 2 en BD
-    } else {
-        console.log("no se detecto el juegohtml")
-        return null;  // no detecta juego
-    }
-}
-// --FUNCION 2--  cargamos estadisticas desde BD
-function cargarEstadisticas() {
-    const juego_id = detectarJuego();  // rescata juego.html
+// Aplicación principal que maneja las estadísticas de juegos y rankings
+//Utiliza Vue.js para la gestión del estado y actualizaciones reactivas en tablas
+// y listas de partidas, rankings y estadísticas de usuario
 
-    if (!juego_id) {
-        console.error("No se pudo detectar el juego");
-        return;
-    }
-    // fetch pasandole el id del juego
-    fetch(`../pages/getEstadisticas.php?juego_id=${juego_id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al cargar las estadísticas');
-            }
-            return response.json();
-        })
-        .then(data => {//obtenemos estiqueta ids del html
-            if (data.status === 'success') {
-                let totalMatchesElem, totalWinsElem, totalLossesElem, winrateElem;
-                const currentPage = window.location.pathname.split("/").pop();
+document.addEventListener("DOMContentLoaded", function() {
+    if (document.getElementById('user-stats')) {
+        if (!document.getElementById('user-stats').__vue__) { // Verificar si Vue.js ya está inicializado
+            const vueInstance = new Vue({
+                el: "#user-stats", // Elemento HTML donde se montará Vue
+                data: {
+                    totalMatches: 0,
+                    totalWins: 0,
+                    totalLosses: 0,
+                    winrate: '0%',
+                    totalKills: 0,
+                    totalDeaths: 0,
+                    totalAssists: 0,
+                    kdRatio: '0',
+                    mapas: [],
+                    agentes: []
+                },
+                methods: {
+                    // Detecta el juego actual basado en la URL
+                    // retorna 1 para Valorant, 2 para CS2, null si no se detecta
+                    detectarJuego() {
+                        const currentPage = window.location.pathname.split("/").pop();  // detecta html
+                        console.log("Archivo detectado:", currentPage);  // log para verificar
+                        //valida
+                        if (currentPage === "valo.php") {
+                            return 1;  // valo tiene id 1 en BD
+                        } else if (currentPage === "cs2.php") {
+                            return 2;  // cs tiene id 2 en BD
+                        } else {
+                            console.log("no se detecto el juego(php)");  // log para verificar
+                            return null;  // no detecta juego
+                        }
+                    },
+                    // Carga las estadísticas del usuario desde el servidor
+                    cargarEstadisticas() {
+                        const juego_id = this.detectarJuego();
+                        const user_id = document.getElementById('user_id').value;
+                        console.log("Cargando estadísticas para juego_id:", juego_id, "user_id:", user_id); 
+                        if (!juego_id) {
+                            console.error("No se pudo detectar el juego");
+                            return;
+                        }
+                        fetch(`../pages/getEstadisticas.php?juego_id=${juego_id}&user_id=${user_id}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log("Datos recibidos para cargar estadísticas:", data); // Añadir console.log para depurar la data
+                                if (data.status === 'success') {
+                                    this.totalMatches = parseInt(data.total_partidas) || 0;
+                                    this.totalWins = parseInt(data.total_victorias) || 0;
+                                    this.totalLosses = parseInt(data.total_derrotas) || 0; // parseInt para convertir a entero y evitar NaN en tabla dinamica
+                                    this.totalKills = parseInt(data.total_kills) || 0;
+                                    this.totalDeaths = parseInt(data.total_deaths) || 0;
+                                    this.totalAssists = parseInt(data.total_assists) || 0;
+                                    this.winrate = this.calcularWinrate(this.totalWins, this.totalMatches);
+                                    this.kdRatio = this.calcularKdRatio(
+                                        this.totalKills, 
+                                        this.totalDeaths,
+                                        this.totalAssists
+                                    );
+                                    console.log("Estadísticas cargadas:", {
+                                        totalMatches: this.totalMatches,
+                                        totalWins: this.totalWins,
+                                        totalLosses: this.totalLosses,
+                                        totalKills: this.totalKills,
+                                        totalDeaths: this.totalDeaths,
+                                        totalAssists: this.totalAssists,
+                                        winrate: this.winrate,
+                                        kdRatio: this.kdRatio
+                                    });
+                                } else {
+                                    alert("Error al cargar las estadísticas: " + data.message);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error al cargar las estadísticas:", error);
+                            });
+                    },
+                    // Actualiza las estadísticas locales después de una nueva partida
+                    //  data - Datos de la nueva partida                 objeto de vue 
+                    actualizarEstadisticas(data) {
+                        console.log("Datos para actualizar estadísticas:", data); // Añadir console.log para depurar la data
+                        this.totalMatches = parseInt(data.total_partidas) || 0;
+                        this.totalWins = parseInt(data.total_victorias) || 0;
+                        this.totalLosses = parseInt(data.total_derrotas) || 0;
+                        this.totalKills = parseInt(data.total_kills) || 0;
+                        this.totalDeaths = parseInt(data.total_deaths) || 0;
+                        this.totalAssists = parseInt(data.total_assists) || 0;
+                        this.winrate = this.calcularWinrate(this.totalWins, this.totalMatches);
+                        this.kdRatio = this.calcularKdRatio(this.totalKills, this.totalDeaths, this.totalAssists);
+                        console.log("Estadísticas actualizadas después de añadir partida:", {
+                            totalMatches: this.totalMatches,
+                            totalWins: this.totalWins,
+                            totalLosses: this.totalLosses,
+                            totalKills: this.totalKills,
+                            totalDeaths: this.totalDeaths,
+                            totalAssists: this.totalAssists,
+                            winrate: this.winrate,
+                            kdRatio: this.kdRatio
+                        });
+                    },
+                    // Envía los datos de una nueva partida al servidor
+                    //  event - Evento del formulario
+                    enviarEstadisticas(event) {
+                        event.preventDefault();
 
-                if (currentPage === "valo.html") {
-                    totalMatchesElem = document.getElementById('valo-total-matches');
-                    totalWinsElem = document.getElementById('valo-total-wins');
-                    totalLossesElem = document.getElementById('valo-total-losses');
-                    winrateElem = document.getElementById('valo-winrate');
-                } else if (currentPage === "cs2.html") {
-                    totalMatchesElem = document.getElementById('cs2-total-matches');
-                    totalWinsElem = document.getElementById('cs2-total-wins');
-                    totalLossesElem = document.getElementById('cs2-total-losses');
-                    winrateElem = document.getElementById('cs2-winrate');
-                } else {
-                    console.error("No se pudo detectar la página");
-                    return;
+                        const juego_id = this.detectarJuego();  // Detectar el juego
+                        if (!juego_id) {
+                            alert("No se pudo detectar el juego. Por favor, verifica la página actual.");
+                            return;
+                        }
+
+                        const wins = document.getElementById('win').value === "win" ? 1 : 0;
+                        const kills = parseInt(document.getElementById('kills').value);
+                        const deaths = parseInt(document.getElementById('deaths').value);
+                        const assists = parseInt(document.getElementById('assists').value);
+                        const mapa_id = parseInt(document.getElementById('map').value);
+                        const user_id = parseInt(document.getElementById('user_id').value);
+                        console.log("Datos recogidos para enviar estadísticas:", {
+                            juego_id, wins, kills, deaths, assists, mapa_id, user_id
+                        });
+                        // validamos entrys con int
+                        if (isNaN(kills) || isNaN(deaths) || isNaN(assists) || isNaN(mapa_id) || mapa_id === 0) {
+                            alert("Por favor, selecciona valores válidos y numéricos.");
+                            return;
+                        }
+
+                        let agente_id;
+                        const currentPage = window.location.pathname.split("/").pop();  // Detectar el archivo HTML
+                        //  ---en valo.php se ingresa agente !!!---
+                        if (currentPage === "valo.php") {
+                            agente_id = parseInt(document.getElementById('agente_id').value);  // convertir a entero
+                            if (isNaN(agente_id) || agente_id === 0) {
+                                alert("Por favor, selecciona un agente válido.");
+                                return;
+                            }//imprimimos valores
+                            console.log("Datos recogidos para Valorant:", { juego_id, wins, kills, deaths, assists, agente_id, mapa_id, user_id });
+                        } else {
+                            console.log("Datos recogidos para Counter-Strike 2:", { juego_id, wins, kills, deaths, assists, mapa_id, user_id });
+                        }
+
+                        // ENVIAMOS DATOS A BD
+                        const datos = currentPage === "valo.php"
+                            ? { juego_id, wins, kills, deaths, assists, agente_id, mapa_id, user_id }
+                            : { juego_id, wins, kills, deaths, assists, mapa_id, user_id };
+
+                        fetch('../pages/postPartida.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(datos)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error en la respuesta del servidor');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("Respuesta del servidor al enviar estadísticas:", data);
+                            if (data.status === 'success') {
+                                // update estadisticas despues de agregar a la BD
+                                const newTotalKills = this.totalKills + kills;
+                                const newTotalDeaths = this.totalDeaths + deaths;
+                                const newTotalAssists = this.totalAssists + assists;
+                                
+                                this.actualizarEstadisticas({
+                                    total_partidas: this.totalMatches + 1,
+                                    total_victorias: this.totalWins + wins,
+                                    total_derrotas: this.totalLosses + (1 - wins),
+                                    total_kills: newTotalKills,
+                                    total_deaths: newTotalDeaths,
+                                    total_assists: newTotalAssists,
+                                    winrate: this.calcularWinrate(this.totalWins + wins, this.totalMatches + 1)
+                                });
+
+                                // Actualizar KDA inmediatamente
+                                this.kdRatio = this.calcularKdRatio(newTotalKills, newTotalDeaths, newTotalAssists);
+                                
+                                alert("Partida añadida exitosamente.");
+                            } else {
+                                alert("Hubo un error al añadir la partida: " + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error al enviar los datos:", error);
+                            alert("Error al guardar las estadísticas: " + error.message);
+                        });
+                    },
+                    // Calcula el porcentaje de victorias
+                    // totalWins - Total de victorias del usuario
+                    // totalMatches - Total de partidas jugadas por el usuario
+                    // retorna el Porcentaje formateado con dos decimales
+                    calcularWinrate(totalWins, totalMatches) {
+                        return totalMatches > 0 ? ((totalWins * 100) / totalMatches).toFixed(2) + '%' : '0%';
+                    },
+                    // Calcula la ratio de eliminaciones/muertes
+                    // totalKills - Total de eliminaciones del usuario
+                    // totalDeaths - Total de muertes del usuario
+                    // retorna el Ratio formateado con dos decimales del kd
+                    calcularKdRatio(totalKills, totalDeaths, totalAssists) {
+                        if (totalKills === 0 && totalDeaths === 0 && totalAssists === 0) {
+                            return '0.00';
+                        }
+                        return ((totalKills + (totalAssists/2)) / (totalDeaths || 1)).toFixed(2);
+                    },
+                    // Carga la lista de mapas disponibles según el juego
+                    cargarMapas() {
+                        const juego_id = this.detectarJuego();  // Detectar el juego actual
+                        // FETCH con el id del juego
+                        fetch(`../pages/getMapas.php?juego_id=${juego_id}`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Error al cargar los mapas');
+                                }
+                                return response.json();
+                            })
+                            .then(mapas => {
+                                console.log("Mapas recibidos:", mapas);  // Verifica los datos en la consola
+                                this.mapas = mapas;
+                                this.actualizarSelectMapas();
+                            })
+                            .catch(error => {
+                                console.error("Error al cargar los mapas:", error);
+                            });
+                    },
+                    // Actualiza el select de mapas en el DOM
+                    actualizarSelectMapas() {
+                        const mapaSelect = document.getElementById('map');
+                        mapaSelect.innerHTML = ""; // Limpiar las opciones anteriores
+                        this.mapas.forEach(mapa => {
+                            let option = document.createElement('option');
+                            option.value = mapa.id_mapas;
+                            option.textContent = mapa.nombre;
+                            mapaSelect.appendChild(option);
+                        });
+                        console.log("Select de mapas actualizado:", this.mapas);
+                    },
+                    // Carga la lista de agentes de Valorant
+                    cargarAgentes() {
+                        console.log("Cargando agentes...");
+                        fetch('../pages/getAgentes.php')
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Error al cargar los agentes');
+                                }
+                                return response.json();
+                            })
+                            .then(agentes => {
+                                console.log("Agentes recibidos: ", agentes);
+                                this.agentes = agentes;
+                                this.actualizarSelectAgentes();
+                            })
+                            .catch(error => {
+                                console.error("Error al cargar los agentes:", error);
+                            });
+                    },
+                    // Actualiza el select de agentes en el DOM
+                    actualizarSelectAgentes() {
+                        const agenteSelect = document.getElementById('agente_id');
+                        agenteSelect.innerHTML = ""; // Limpiar las opciones anteriores
+                        this.agentes.forEach(agente => {
+                            let option = document.createElement('option');
+                            option.value = agente.id_agentes;
+                            option.textContent = agente.nombre;
+                            agenteSelect.appendChild(option);
+                        });
+                        console.log("Select de agentes actualizado:", this.agentes);
+                    }
+                },
+                mounted() {
+                    console.log("Vue.js se ha inicializado correctamente."); // Mensaje de consola para verificar la inicialización
+                    // Cargar estadísticas cuando el componente se monta
+                    this.cargarEstadisticas();
+                    this.cargarMapas();
+                    const currentPage = window.location.pathname.split("/").pop();
+                    if (currentPage === "valo.php") {
+                        this.cargarAgentes();
+                    }
                 }
-                //validamos si los elementos existen en juego.html
-                if (totalMatchesElem && totalWinsElem && totalLossesElem && winrateElem) {
-                    // Actualizar las estadísticas en la interfaz
-                    totalMatchesElem.textContent = data.total_partidas;
-                    totalWinsElem.textContent = data.total_victorias;
-                    totalLossesElem.textContent = data.total_derrotas;
-                    winrateElem.textContent = data.winrate.toFixed() + '%';
-                } else {
-                    console.error("Elementos de estadísticas no encontrados en el DOM.");
-                }
-            } else {
-                alert("Error al cargar las estadísticas: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error("Error al cargar las estadísticas:", error);
-        });
-}
-// cargamos estadisticas desde el principio
-document.addEventListener("DOMContentLoaded", cargarEstadisticas);
-
-// --FUNCION 3-- para actualizar la interfaz con las estadísticas ingresadas
-function actualizarEstadisticas(wins, kills, deaths, assists) {
-    console.log("Actualizando estadísticas");
-
-    let totalMatchesElem, totalWinsElem, totalLossesElem, winrateElem;
-    const currentPage = window.location.pathname.split("/").pop();
-
-    if (currentPage === "valo.html") {
-        totalMatchesElem = document.getElementById('valo-total-matches');
-        totalWinsElem = document.getElementById('valo-total-wins');
-        totalLossesElem = document.getElementById('valo-total-losses');
-        winrateElem = document.getElementById('valo-winrate');
-    } else if (currentPage === "cs2.html") {
-        totalMatchesElem = document.getElementById('cs2-total-matches');
-        totalWinsElem = document.getElementById('cs2-total-wins');
-        totalLossesElem = document.getElementById('cs2-total-losses');
-        winrateElem = document.getElementById('cs2-winrate');
-    } else {
-        console.error("No se pudo detectar la página");
-        return;
-    }
-    // obtenemos y parseamos las estadisticas
-    let totalMatches = parseInt(totalMatchesElem.textContent) + 1;
-    let totalWins = wins ? parseInt(totalWinsElem.textContent) + 1 : parseInt(totalWinsElem.textContent);
-    let totalLosses = wins ? parseInt(totalLossesElem.textContent) : parseInt(totalLossesElem.textContent) + 1;
-    let winrate = totalWins > 0 ? (totalWins * 100) / totalMatches : 0;
-
-    // update de valores en la intefaz
-    totalMatchesElem.textContent = totalMatches;
-    totalWinsElem.textContent = totalWins;
-    totalLossesElem.textContent = totalLosses;
-    winrateElem.textContent = winrate.toFixed() + '%';
-
-    console.log(`Partidas: ${totalMatches}, Victorias: ${totalWins}, Derrotas: ${totalLosses}, Winrate: ${winrate.toFixed()}%`);
-}
-
-// --FUNCION 4-- envia estadisticas a BD usando FETCH
-function enviarEstadisticas(event) {
-    event.preventDefault();
-
-    const juego_id = detectarJuego();  // Detectar el juego
-    if (!juego_id) {
-        alert("No se pudo detectar el juego. Por favor, verifica la página actual.");
-        return;
-    }
-
-    const wins = document.getElementById('win').value === "win" ? 1 : 0;
-    const kills = parseInt(document.getElementById('kills').value);
-    const deaths = parseInt(document.getElementById('muertes').value);
-    const assists = parseInt(document.getElementById('asistencias').value);
-    const mapa_id = parseInt(document.getElementById('mapa_id').value);
-    // validamos entrys con int
-    if (isNaN(kills) || isNaN(deaths) || isNaN(assists) || isNaN(mapa_id) || mapa_id === 0) {
-        alert("Por favor, selecciona valores válidos y numéricos.");
-        return;
-    }
-
-    let agente_id;
-    const currentPage = window.location.pathname.split("/").pop();  // Detectar el archivo HTML
-    //  ---en valo.html se ingresa agente !!!---
-    if (currentPage === "valo.html") {
-        agente_id = parseInt(document.getElementById('agente_id').value);  // convertir a entero
-        if (isNaN(agente_id) || agente_id === 0) {
-            alert("Por favor, selecciona un agente válido.");
-            return;
-        }//imprimimos valores
-        console.log("Datos recogidos para Valorant:", { juego_id, wins, kills, deaths, assists, agente_id, mapa_id });
-    } else {
-        console.log("Datos recogidos para Counter-Strike 2:", { juego_id, wins, kills, deaths, assists, mapa_id });
-    }
-
-    // ENVIAMOS DATOS A BD
-    const datos = currentPage === "valo.html"
-        ? { juego_id, wins, kills, deaths, assists, agente_id, mapa_id }
-        : { juego_id, wins, kills, deaths, assists, mapa_id };
-
-    fetch('../pages/postPartida.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Respuesta del servidor:", data);
-        if (data.status === 'success') {
-            // update estadisticas despues de agregar a la BD
-            actualizarEstadisticas(wins, kills, deaths, assists);
-            alert("Partida añadida exitosamente.");
-        } else {
-            alert("Hubo un error al añadir la partida: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error("Error al enviar los datos:", error);
-        alert("Error al guardar las estadísticas: " + error.message);
-    });
-}
-
-// Manejadores de eventos
-document.getElementById('stats-form').addEventListener('submit', enviarEstadisticas);
-document.getElementById('boton').addEventListener('mouseover', function() {
-    this.style.backgroundColor = '#ff6f81';  // Cambia el color al pasar el mouse
-    console.log("Mouse sobre el botón:", this.id);  // Log para verificar el evento
-});
-document.getElementById('boton').addEventListener('mouseout', function() {
-    this.style.backgroundColor = '#FF4655';  // Restaura el color al salir el mouse
-    console.log("Mouse fuera del botón:", this.id);  // Log para verificar el evento
-});
-
-// Función para cargar los Agentes
-function CargarAgentes() {
-    fetch('../pages/getAgentes.php')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar los agentes');
-        }
-        return response.json();
-    })
-    .then(agentes => {
-        console.log("Agentes recibidos: ", agentes);
-        let agenteSelect = document.getElementById('agente_id');
-        agenteSelect.innerHTML = ""; // lipia select 
-        agentes.forEach(agente => {// carga los agentes
-            let option = document.createElement('option');//crea el option
-            option.value = agente.id_agentes;//ponemos valor al value del option
-            option.textContent = agente.nombre + ' (' + agente.rol + ')';// concat rol en el option
-            agenteSelect.appendChild(option);
-        });
-    })
-    .catch(error => {
-        console.error("Error al cargar los agentes:", error);
-    });
-}
-
-document.addEventListener("DOMContentLoaded", CargarAgentes())
-
-
-// --FUNCION 5-- para cargar los Mapas según el juego detectado
-function cargarMapas() {    
-    const juego_id = detectarJuego();  // Detectar el juego actual
-
-    if (!juego_id) {
-        console.error("Juego no detectado");
-        return;
-    }
-    // FETCH con el id del juego
-    fetch(`../pages/getMapas.php?juego_id=${juego_id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al cargar los mapas');
-            }
-            return response.json();
-        })
-        .then(mapas => {
-            console.log("Mapas recibidos:", mapas);  // Verifica los datos en la consola
-            let mapaSelect = document.getElementById('mapa_id');
-            mapaSelect.innerHTML = ""; // Limpiar las opciones anteriores
-
-            mapas.forEach(mapa => {
-                let option = document.createElement('option');
-                option.value = mapa.id_mapas;
-                option.textContent = mapa.nombre;
-                mapaSelect.appendChild(option);
             });
-        })
-        .catch(error => {
-            console.error("Error al cargar los mapas:", error);
-        });
-}
 
-// Llamar a cargarMapas al cargar la página
-document.addEventListener("DOMContentLoaded", cargarMapas);
+            // Manejadores de eventos
+            document.getElementById('stats-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                vueInstance.enviarEstadisticas(event);
+            });
+        }
+    }
+});
+
+// Instancia Vue para gestionar la lista de partidas
+document.addEventListener("DOMContentLoaded", function() {
+    if (document.getElementById('partidas-list')) {
+        new Vue({
+            el: "#partidas-list",
+            data: {
+                partidas: [],
+                partidaEditando: null,
+                cargando: true
+            },
+            methods: {
+                // Carga todas las partidas del usuario
+                async cargarPartidas() {
+                    this.cargando = true;
+                    try {
+                        const response = await fetch('../pages/getPartidas.php');
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                        const data = await response.json();
+                        this.partidas = data;
+                        console.log("Partidas cargadas:", data);
+                    } catch (error) {
+                        console.error("Error al cargar las partidas:", error);
+                        alert("Error al cargar las partidas: " + error.message);
+                    } finally {
+                        this.cargando = false;
+                    }
+                },
+                // Elimina una partida específica
+                // partidaId - ID de la partida a eliminar
+                eliminarPartida(partidaId) {
+                    if (confirm('¿Estás seguro de que deseas eliminar esta partida?')) {
+                        fetch('../pages/deletePartida.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ partida_id: partidaId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                // Eliminar la partida del array local
+                                this.partidas = this.partidas.filter(p => p.id_partidas !== partidaId);
+                                alert('Partida eliminada correctamente');
+                            } else {
+                                throw new Error(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error al eliminar la partida: ' + error.message);
+                        });
+                    }
+                },
+                // Inicia la edición de una partida
+                // partida - Datos de la partida a editar
+                editarPartida(partida) {
+                    this.partidaEditando = { ...partida };
+                    const modal = new bootstrap.Modal(document.getElementById('editarPartidaModal'));
+                    modal.show();
+                },
+                //Actualiza los datos de una partida
+                async actualizarPartida() {
+                    try {
+                        const response = await fetch('../pages/updatePartida.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(this.partidaEditando)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.status === 'success') {
+                            // Actualizar instantaneamente tarjeta de partidos
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('editarPartidaModal'));
+                            modal.hide();
+                            const index = this.partidas.findIndex(p => p.id_partidas === this.partidaEditando.id_partidas);
+                            if (index !== -1) {
+                                Vue.set(this.partidas, index, { ...this.partidaEditando });
+                            }
+                            
+                            // Recargar todas las partidas para asegurar sincronización
+                            await this.cargarPartidas();
+                            
+                            alert('Partida actualizada correctamente');
+                        } else {
+                            throw new Error(data.message);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Error al actualizar la partida: ' + error.message);
+                    }
+                }
+            },
+            watch: {
+                // Observador para cambios en las partidas
+                partidas: {
+                    deep: true,
+                    handler(newVal) {
+                        console.log("Partidas actualizadas:", newVal);
+                    }
+                }
+            },
+            mounted() {
+                console.log("Vue instance mounted for partidas-list");
+                this.cargarPartidas();
+            }
+        });
+    }
+});
+
+//Instancia Vue para gestionar los rankings de winrate y KDA
+document.addEventListener("DOMContentLoaded", function() {
+    if (document.getElementById('rankings')) {
+        new Vue({
+            el: "#rankings",
+            data: {
+                valorantWinrateRankings: [],
+                valorantKdaRankings: [],
+                cs2WinrateRankings: [],
+                cs2KdaRankings: [],
+                loading: false,
+                error: null
+            },
+            methods: {
+                //Carga los rankings de winrate y KDA desde el servidor
+                async loadRankings() {
+                    this.loading = true;
+                    this.error = null;
+                    try {
+                        const response = await fetch('../pages/getRankings.php');
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const data = await response.json();
+                        
+                        if (data.status === 'success') {
+                            this.valorantWinrateRankings = data.valorantWinrate || [];
+                            this.valorantKdaRankings = data.valorantKda || [];
+                            this.cs2WinrateRankings = data.cs2Winrate || [];
+                            this.cs2KdaRankings = data.cs2Kda || [];
+                        } else {
+                            throw new Error(data.message || 'Unknown error');
+                        }
+                    } catch (error) {
+                        console.error('Loading Rankings Error:', error);
+                        this.error = `Error loading rankings: ${error.message}`;
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            },
+            mounted() {
+                this.loadRankings();
+                setInterval(this.loadRankings, 300000);
+            }
+        });
+    }
+});
+
+// Verificar que Vue está disponible
+if (typeof Vue === 'undefined') {
+    console.error('Vue.js no está cargado');
+} else {
+    // Vue instance para autenticación
+    document.addEventListener("DOMContentLoaded", function() {
+        if (document.getElementById('loginForm') || document.getElementById('registerForm')) {
+            new Vue({
+                el: document.getElementById('loginForm') ? '#loginForm' : '#registerForm',
+                data: {
+                    formData: {
+                        username: '',
+                        password: '',
+                        email: document.getElementById('registerForm') ? '' : null
+                    },
+                    errors: [],
+                    loading: false,
+                    successMessage: ''
+                },
+                methods: {
+                    /**
+                     * Valida el formulario antes de enviarlo
+                     * @returns {boolean} true si es válido, false si no
+                     */
+                    validateForm() {
+                        this.errors = [];
+                        
+                        if (!this.formData.username) {
+                            this.errors.push('El nombre de usuario es requerido');
+                        }
+                        
+                        if (!this.formData.password) {
+                            this.errors.push('La contraseña es requerida');
+                        } else if (this.formData.password.length < 8) {
+                            this.errors.push('La contraseña debe tener al menos 8 caracteres');
+                        }
+                        
+                        if (document.getElementById('registerForm') && !this.formData.email) {
+                            this.errors.push('El correo electrónico es requerido');
+                        }
+                        
+                        return this.errors.length === 0;
+                    },
+
+                    /**
+                     * Maneja el envío del formulario
+                     * @param {Event} event - Evento del formulario
+                     */
+                    async handleSubmit(event) {
+                        event.preventDefault();
+                        
+                        if (!this.validateForm()) {
+                            return;
+                        }
+                        
+                        this.loading = true;
+                        // Actualizar endpoints con rutas correctas
+                        const isLogin = event.target.id === 'loginForm';
+                        const endpoint = isLogin ? './pages/inicio.php' : '../pages/registro.php';
+                        
+                        try {
+                            const response = await fetch(endpoint, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify(this.formData)
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            const contentType = response.headers.get("content-type");
+                            if (!contentType || !contentType.includes("application/json")) {
+                                throw new TypeError("Respuesta del servidor no es JSON");
+                            }
+
+                            const data = await response.json();
+                            console.log('Respuesta del servidor:', data);
+                            
+                            if (data.status === 'success') {
+                                // Asegurarse de usar la ruta completa desde la raíz del proyecto
+                                window.location.href = data.redirect || './templates/home.php';
+                            } else {
+                                this.errors.push(data.message || 'Error en la autenticación');
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            this.errors.push('Error en la comunicación con el servidor');
+                        } finally {
+                            this.loading = false;
+                        }
+                    },
+
+                    /**
+                     * Limpia los errores después de un tiempo
+                     */
+                    clearErrors() {
+                        setTimeout(() => {
+                            this.errors = [];
+                        }, 5000);
+                    }
+                },
+                watch: {
+                    errors(newErrors) {
+                        if (newErrors.length > 0) {
+                            this.clearErrors();
+                        }
+                    }
+                },
+                mounted() {
+                    console.log('Vue montado para autenticación');
+                }
+            });
+        }
+    });
+}

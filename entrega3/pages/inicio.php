@@ -1,49 +1,57 @@
 <?php
+session_start();
 require 'config.inc';
 
-// Configuración de cookies de sesión
-session_set_cookie_params([
-    'lifetime' => 0,
-    'path' => '/',
-    'domain' => '',
-    'secure' => isset($_SERVER['HTTPS']),
-    'httponly' => true,
-    'samesite' => 'Strict',
-]);
+// Asegurarse de que estamos recibiendo una solicitud JSON
+header('Content-Type: application/json');
 
-session_start();
+// Obtener los datos JSON del cuerpo de la solicitud
+$json = file_get_contents('php://input');
+$data = json_decode($json, true);
 
-// Recibir datos del formulario
-$username = $_POST['username'];
-$pass = $_POST['password'];
+$username = $data['username'] ?? null;
+$pass = $data['password'] ?? null;
 
-// Buscar al usuario en la base de datos usando declaración preparada
-$stmt = $conn->prepare("SELECT * FROM dw2_users WHERE username=?");
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    
-    // Verificar la contraseña
-    if (password_verify($pass, $row['passwd'])) {
-        // Guardar el ID del usuario en la sesión (usando id_users)
-        $_SESSION['user_id'] = $row['id_users'];  
-        $_SESSION['username'] = $username;
-        
-        // Redireccionar al home o a la página deseada
-        header("Location: ../templates/home.html");
-        exit();
-    } else {
-        echo "Contraseña incorrecta.";
-        header("Location: ../index.html");
-        exit();
-    }
-} else {
-    echo "Usuario no encontrado.";
-    header("Location: ../index.html?error=1");
+if (!$username || !$pass) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Por favor ingresa usuario y contraseña.'
+    ]);
     exit();
+}
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM dw2_users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        if (password_verify($pass, $user['passwd'])) {
+            $_SESSION['user_id'] = $user['id_users'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['last_activity'] = time();
+            
+            echo json_encode([
+                'status' => 'success',
+                'redirect' => './templates/home.php'  // Ruta actualizada
+            ]);
+            exit();
+        }
+    }
+
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Usuario o contraseña incorrectos.'
+    ]);
+    
+} catch (Exception $e) {
+    error_log("Error en login: " . $e->getMessage());
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Error del sistema.'
+    ]);
 }
 
 $stmt->close();

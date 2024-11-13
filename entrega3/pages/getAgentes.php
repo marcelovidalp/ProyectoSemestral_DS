@@ -1,16 +1,11 @@
 <?php
 require 'config.inc';
-
-session_set_cookie_params([
-    'lifetime' => 0,
-    'path' => '/',
-    'domain' => '',
-    'secure' => isset($_SERVER['HTTPS']),
-    'httponly' => true,
-    'samesite' => 'Strict',
-]);
-
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Usuario no autenticado']);
+    exit();
+}
 
 $sql = "SELECT id_agentes, nombre, rol FROM dw2_agentes";
 $result = $conn->query($sql);

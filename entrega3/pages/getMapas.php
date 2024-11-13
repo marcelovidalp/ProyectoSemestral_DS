@@ -1,13 +1,10 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 // Incluir la configuración de conexión
-include 'config.inc';
+require 'config.inc';
+session_start();//mantenemos sesion iniciada
 
-// Verificar si la conexión es exitosa
-if (!$conn) {
-    echo json_encode(['status' => 'error', 'message' => 'Error en la conexión a la base de datos']);
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(["status" => "error", "message" => "Usuario no autenticado"]);
     exit();
 }
 

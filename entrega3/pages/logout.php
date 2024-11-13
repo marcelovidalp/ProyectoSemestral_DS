@@ -11,6 +11,6 @@ session_unset();
 session_destroy();
 
 // Redirigir al usuario a la página de inicio de sesión o principal
-header("Location: login.html");
+header("Location: ../index.php");
 exit();
 ?>
