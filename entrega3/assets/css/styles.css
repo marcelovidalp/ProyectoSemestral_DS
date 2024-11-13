@@ -382,3 +382,37 @@ footer p {
     font-weight: bold;
     margin-bottom: 2rem;
 }
+
+/* Estilos para la sección de bienvenida */
+#home {
+    position: relative;
+    overflow: hidden;
+}
+
+#home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+    z-index: -1;
+}
+
+.hover-effect {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-effect:hover {
+    transform: translateY(-5px);
+}
+
+.bienvenido {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.lead strong, .lead em {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
