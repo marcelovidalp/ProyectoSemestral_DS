@@ -12,9 +12,11 @@ if (isset($_SESSION['user_id'])) {
     <title>Game Tracker</title>
 </head>
 <body class="bg-dark text-white">
+    <div class="auth-background auth-background-register"></div>
     <div class="container min-vh-100 d-flex justify-content-center align-items-center">
         <div class="auth-container bg-secondary p-4 rounded-3 shadow-lg">
-            <h2 class="text-center mb-4">Registro</h2>
+            <h2 class="text-center mb-4 auth-title">GAME TRACKER</h2>
+            <h3 class="text-center mb-4 text-white">Registro</h3>
             
             <form id="registerForm" @submit.prevent="handleSubmit" class="needs-validation" novalidate>
                 <div v-if="errors.length" class="alert alert-danger">

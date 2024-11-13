@@ -339,3 +339,46 @@ footer p {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Estilos para los fondos de autenticación */
+.auth-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.auth-background-login {
+    background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.75) 100%),
+                url('../imgs/inicio-img.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.auth-background-register {
+    background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.75) 100%),
+                url('../imgs/registro-img.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.auth-container {
+    background: rgba(33, 37, 41, 0.9) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    box-shadow: 
+        0 0 30px rgba(255, 193, 7, 0.2),
+        0 0 50px rgba(255, 193, 7, 0.1);
+}
+
+.auth-title {
+    color: #ffc107;
+    text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
