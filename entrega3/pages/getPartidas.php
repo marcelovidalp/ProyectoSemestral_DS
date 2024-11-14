@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 
 try {
     $query = "SELECT p.id_partidas, p.resultado, p.asesinatos, p.muertes, p.asistencias,
-                     m.nombre AS nombre_mapa, 
+                     p.id_juego, m.nombre AS nombre_mapa, 
                      j.nombre AS nombre_juego,
                      CASE WHEN j.nombre = 'Valorant' THEN a.nombre ELSE NULL END AS nombre_agente
               FROM dw2_partidas p
@@ -31,6 +31,7 @@ try {
     while ($row = $result->fetch_assoc()) {
         $partidas[] = [
             'id_partidas' => $row['id_partidas'],
+            'id_juego' => (int)$row['id_juego'], // Aseguramos que sea entero
             'resultado' => $row['resultado'],
             'asesinatos' => $row['asesinatos'],
             'muertes' => $row['muertes'],

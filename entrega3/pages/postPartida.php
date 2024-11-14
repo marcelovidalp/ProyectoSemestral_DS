@@ -1,5 +1,27 @@
 <?php
 
+/**
+ * Controlador para Registro de Partidas
+ * 
+ * Maneja la creación de nuevas partidas con:
+ * - Validación de datos
+ * - Inserción en BD
+ * - Manejo de errores
+ * - Respuestas JSON
+ * 
+ * @param JSON {
+ *    juego_id: number,
+ *    wins: number,
+ *    kills: number,
+ *    deaths: number,
+ *    assists: number,
+ *    mapa_id: number,
+ *    agente_id?: number,  // Solo para Valorant
+ *    user_id: number
+ * }
+ * @return JSON { status: string, message: string }
+ */
+
 require 'config.inc'; // Asegúrate de que este archivo contiene la conexión a la base de datos.
 
 header('Content-Type: application/json');

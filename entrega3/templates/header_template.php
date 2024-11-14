@@ -25,6 +25,9 @@
                             <li><a class="dropdown-item" href="partidas.php">
                                 <i class="fas fa-history me-2"></i>Historial
                             </a></li>
+                            <li><a class="dropdown-item" href="rankings.php">
+                                <i class="fas fa-trophy me-2"></i>Rankings
+                            </a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="../pages/logout.php">
                                 <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión

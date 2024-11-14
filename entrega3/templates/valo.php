@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../index.html");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -16,15 +16,14 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Header -->
     <?php include 'header_template.php'; ?>
-
+    
     <!-- Main-->
     <main class="container mt-5">
         <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-warning mb-3 text-shadow game-title">VALORANT</h1>
-            <p class="lead fs-3 text-white bg-dark bg-opacity-75 p-3 rounded shadow-lg border border-warning">Domina a tus enemigos plantando o desactivando la Spike!!</p>
+            <h1 class="display-4 fw-bold text-danger mb-3 text-shadow game-title">VALORANT</h1>
+            <p class="lead fs-3 text-white bg-dark bg-opacity-75 p-3 rounded shadow-lg border border-danger">Domina a tus enemigos plantando o desactivando la Spike!!</p>
         </div>
-
-        <main class="container my-5">
+        
         <!-- Selector de juego -->
         <section class="text-center mb-5">
             <div class="row justify-content-center mt-4">
@@ -141,14 +140,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>    
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <p class="mb-0">&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
-        <p class="small text-muted">Mantente al tanto de tu rendimiento en Valorant</p>
-    </footer>
-
-    <!-- bootstrap JavaScript -->
-    <?php include 'scripts_config.php'; ?>
-
 </body>
+    <?php include 'footer_template.php'; ?>
+    <?php include 'scripts_config.php'; ?>
 </html>

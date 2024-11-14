@@ -1,6 +1,15 @@
-// Aplicación principal que maneja las estadísticas de juegos y rankings
-//Utiliza Vue.js para la gestión del estado y actualizaciones reactivas en tablas
-// y listas de partidas, rankings y estadísticas de usuario
+/**
+ * Game Tracker - Sistema de Gestión de Estadísticas para Juegos
+ * Aplicación principal que maneja las estadísticas de juegos y rankings
+ * Implementado con Vue.js para gestión de estado y actualizaciones reactivas
+ * 
+ * Características principales:
+ * - Gestión de estadísticas por juego (Valorant y CS2)
+ * - Sistema de rankings por Winrate y KDA
+ * - CRUD completo de partidas
+ * - Manejo de sesiones de usuario
+ * - Interfaz responsiva con Bootstrap
+ */
 
 document.addEventListener("DOMContentLoaded", function() {
     if (document.getElementById('user-stats')) {
@@ -20,8 +29,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     agentes: []
                 },
                 methods: {
-                    // Detecta el juego actual basado en la URL
-                    // retorna 1 para Valorant, 2 para CS2, null si no se detecta
+                    /**
+                     * Detecta el juego actual basado en la URL
+                     * @returns {number|null} 1 para Valorant, 2 para CS2, null si no se detecta
+                     * @description Analiza la URL actual para determinar el contexto del juego
+                     */
                     detectarJuego() {
                         const currentPage = window.location.pathname.split("/").pop();  // detecta html
                         console.log("Archivo detectado:", currentPage);  // log para verificar
@@ -35,7 +47,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             return null;  // no detecta juego
                         }
                     },
-                    // Carga las estadísticas del usuario desde el servidor
+                    /**
+                     * Carga las estadísticas del usuario desde el servidor
+                     * @async
+                     * @description Realiza una petición FETCH para obtener estadísticas del usuario actual
+                     * Actualiza el estado de Vue con los datos recibidos
+                     * Calcula métricas derivadas como winrate y KDA
+                     */
                     cargarEstadisticas() {
                         const juego_id = this.detectarJuego();
                         const user_id = document.getElementById('user_id').value;
@@ -196,10 +214,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     calcularWinrate(totalWins, totalMatches) {
                         return totalMatches > 0 ? ((totalWins * 100) / totalMatches).toFixed(2) + '%' : '0%';
                     },
-                    // Calcula la ratio de eliminaciones/muertes
-                    // totalKills - Total de eliminaciones del usuario
-                    // totalDeaths - Total de muertes del usuario
-                    // retorna el Ratio formateado con dos decimales del kd
+                    /**
+                     * Calcula el ratio KDA incluyendo asistencias
+                     * @param {number} totalKills - Total de eliminaciones
+                     * @param {number} totalDeaths - Total de muertes
+                     * @param {number} totalAssists - Total de asistencias
+                     * @returns {string} KDA formateado a 2 decimales
+                     * @formula (Kills + Assists/2) / Deaths
+                     */
                     calcularKdRatio(totalKills, totalDeaths, totalAssists) {
                         if (totalKills === 0 && totalDeaths === 0 && totalAssists === 0) {
                             return '0.00';
@@ -298,8 +320,10 @@ document.addEventListener("DOMContentLoaded", function() {
             el: "#partidas-list",
             data: {
                 partidas: [],
+                partidasFiltradas: [],
                 partidaEditando: null,
-                cargando: true
+                cargando: true,
+                filtroActual: 'todos'
             },
             methods: {
                 // Carga todas las partidas del usuario
@@ -311,8 +335,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             throw new Error('Error en la respuesta del servidor');
                         }
                         const data = await response.json();
-                        this.partidas = data;
-                        console.log("Partidas cargadas:", data);
+                        // Asegurarnos de que id_juego sea número
+                        this.partidas = data.map(p => ({
+                            ...p,
+                            id_juego: Number(p.id_juego)
+                        }));
+                        this.partidasFiltradas = this.partidas;
+                        console.log("Partidas cargadas:", this.partidas);
                     } catch (error) {
                         console.error("Error al cargar las partidas:", error);
                         alert("Error al cargar las partidas: " + error.message);
@@ -387,6 +416,37 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.error('Error:', error);
                         alert('Error al actualizar la partida: ' + error.message);
                     }
+                },
+                filtrarJuego(filtro) {
+                    this.filtroActual = filtro;
+                    const filtroNumerico = Number(filtro);
+                    
+                    console.log("Datos antes de filtrar:", {
+                        filtro: filtro,
+                        filtroNumerico: filtroNumerico,
+                        totalPartidas: this.partidas.length,
+                        primeraPartida: this.partidas[0]
+                    });
+                
+                    if (filtro === 'todos') {
+                        this.partidasFiltradas = this.partidas;
+                    } else {
+                        this.partidasFiltradas = this.partidas.filter(partida => {
+                            const partidaJuegoId = Number(partida.id_juego);
+                            console.log("Comparando:", {
+                                partidaJuegoId: partidaJuegoId,
+                                filtroId: filtroNumerico,
+                                coincide: partidaJuegoId === filtroNumerico
+                            });
+                            return partidaJuegoId === filtroNumerico;
+                        });
+                    }
+                
+                    console.log("Resultado del filtrado:", {
+                        filtro: filtro,
+                        totalFiltradas: this.partidasFiltradas.length,
+                        partidas: this.partidasFiltradas
+                    });
                 }
             },
             watch: {

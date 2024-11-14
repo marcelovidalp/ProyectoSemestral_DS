@@ -7,6 +7,12 @@ body {
     color: white;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Previene scroll horizontal en todo el sitio */
+    width: 100%;
+    position: relative;
 }
 
 /* Header styles */
@@ -165,15 +171,39 @@ footer {
     background-color: #222;
     text-align: center;
     padding: 10px;
-    position: fixed;
     width: 100%;
-    bottom: 0;
+    margin-top: auto;
 }
 
-footer p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #888;
+/* FOOTER styles */
+.footer {
+    background-color: #212529;
+    border-top: 1px solid rgba(255, 193, 7, 0.2);
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer .social-links a {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer .social-links a:hover {
+    color: #ffc107 !important;
+}
+
+/* Main content wrapper */
+main {
+    flex: 1 0 auto;
+    width: 100%;
+    padding: 1rem 0;
+    margin-top: 1rem;
+    min-height: calc(100vh - 200px); /* Ajusta este valor según la altura de tu footer */
+    overflow-x: hidden; /* Previene scroll horizontal */
 }
 
 /* Estilos para el header y dropdown */
@@ -246,6 +276,24 @@ footer p {
 .game-title:hover {
     filter: contrast(1.3) brightness(1.2);
     transform: scale(1.02);
+}
+
+/* Estilos para los botones de filtro */
+.btn-group .btn {
+    transition: all 0.3s ease;
+}
+
+.btn-group .btn.active {
+    background-color: #ffc107;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+.game-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    vertical-align: middle;
 }
 
 /* Ajustes responsive */

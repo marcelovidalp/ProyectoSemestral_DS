@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../index.html");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -20,8 +20,8 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Main-->
     <main class="container mt-5">
         <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-danger mb-3 text-shadow game-title">COUNTER-STRIKE 2</h1>
-            <p class="lead fs-3 text-white bg-dark bg-opacity-75 p-3 rounded shadow-lg border border-danger">RUSH B CON P90!!</p>
+            <h1 class="display-4 fw-bold text-warning mb-3 text-shadow game-title">COUNTER-STRIKE 2</h1>
+            <p class="lead fs-3 text-white bg-dark bg-opacity-75 p-3 rounded shadow-lg border border-warning">RUSH B CON P90!!</p>
         </div>
 
         <!-- Selector de juego -->
@@ -134,11 +134,6 @@ if (!isset($_SESSION['user_id'])) {
     </main>
 
 </body>
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <p class="mb-0">&copy; 2024 Game Tracker. Todos los derechos reservados.</p>
-        <p class="small text-muted">Mantente al tanto de tu rendimiento en Counter Strike</p>
-    </footer>
-
-    <!-- jQuery and Bootstrap JavaScript -->
+    <?php include 'footer_template.php'; ?>
     <?php include 'scripts_config.php'; ?>
 </html>
