@@ -1,4 +1,4 @@
-<header>
+<header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand btn btn-warning d-flex align-items-center px-3 py-2" href="home.php">
@@ -13,7 +13,7 @@
                     <div class="dropdown">
                         <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user-circle me-2"></i>
-                            <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
+                            Menú
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="cs2.php">
