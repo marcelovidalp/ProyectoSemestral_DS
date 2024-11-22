@@ -361,10 +361,10 @@ document.addEventListener("DOMContentLoaded", function() {
                             body: JSON.stringify({ partida_id: partidaId })
                         })
                         .then(response => response.json())
-                        .then(data => {
+                        .then(async data => {
                             if (data.status === 'success') {
-                                // Eliminar la partida del array local
-                                this.partidas = this.partidas.filter(p => p.id_partidas !== partidaId);
+                                // Recargar todas las partidas para asegurar sincronización
+                                await this.cargarPartidas();
                                 alert('Partida eliminada correctamente');
                             } else {
                                 throw new Error(data.message);
@@ -459,7 +459,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             },
             mounted() {
-                console.log("Vue instance mounted for partidas-list");
+                console.log("Vue montado para partidas-list");
                 this.cargarPartidas();
             }
         });
